@@ -67,7 +67,7 @@ export const AuthorFilters = ({ filters, setFilters }) => {
 
       <button
         type="submit"
-        className="w-full py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300"
+        className="w-full py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition duration-300"
         onClick={() => setDebouncedFilters({})}
       >
         Clear Filters

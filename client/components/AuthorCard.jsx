@@ -41,7 +41,7 @@ export const AuthorCard = ({ author }) => {
       </p>
       <div className="flex justify-end">
         <Link href={`/authors/${author.id}`}>
-          <div className="font-bold text-white cursor-pointer  text-right bg-blue-500 hover:bg-blue-700 rounded-[5px] w-max px-2 py-1 mt-2">
+          <div className="font-bold text-white cursor-pointer  text-right bg-p-600 hover:bg-teal-700 rounded-[5px] w-max px-2 py-1 mt-2">
             Read more
           </div>
         </Link>
