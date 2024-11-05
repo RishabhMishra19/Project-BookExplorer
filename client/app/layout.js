@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { NavBar } from "../components/NavBar";
 import { Footer } from "../components/Footer";
 import { useState } from "react";
-import { getInitialNavItem } from "../utils/genericUtils";
+import { getInitialNavItem, isAuthRoute } from "../utils/genericUtils";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -16,9 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="flex flex-col min-h-screen pt-16">
+        <div className="flex flex-col min-h-screen pt-16 bg-gradient-to-b from-white via-teal-100 to-teal-50">
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
-          <WelcomeBox />
+          {!isAuthRoute(pathname) && <WelcomeBox />}
           {children}
           <Footer />
         </div>

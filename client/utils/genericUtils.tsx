@@ -9,3 +9,7 @@ export const getInitialNavItem = (pathname) => {
     return "signup";
   }
 };
+
+export const isAuthRoute = (pathname) => {
+  return pathname.includes("auth");
+};
