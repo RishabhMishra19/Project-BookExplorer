@@ -62,7 +62,7 @@ export default function Home() {
           </button>
         </form>
         <p className="mt-4 text-center text-teal-600">
-          Don't have an account?{" "}
+          {"Don't have an account? "}
           <Link
             href="/auth/signup"
             className="text-teal-800 hover:underline font-bold"

@@ -1,6 +1,7 @@
 import React from "react";
 import { StarRating } from "./StarRating";
 import Link from "next/link";
+import Image from "next/image";
 import { CiEdit } from "react-icons/ci";
 
 export const AuthorCard = ({ author }) => {
@@ -25,7 +26,7 @@ export const AuthorCard = ({ author }) => {
         </div>
       </div>
       <StarRating rating={author.rating} />
-      <img
+      <Image
         className="w-full h-96 object-cover"
         src={"./AuthorImg.png"}
         alt={author.name}

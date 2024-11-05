@@ -2,6 +2,7 @@ import React from "react";
 import { StarRating } from "./StarRating";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
+import Image from "next/image";
 
 export const BookCard = ({ book }) => {
   return (
@@ -29,7 +30,7 @@ export const BookCard = ({ book }) => {
         </span>
       </p>
       <StarRating rating={book.rating} />
-      <img
+      <Image
         className="w-full h-96 object-cover"
         src={"./DummyBookCover.png"}
         alt={book.title}
