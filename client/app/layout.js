@@ -1,4 +1,4 @@
-import { BgContainer } from "@/components/BgContainer";
+import { WelcomeBox } from "@/components/WelcomeBox";
 import "./globals.css";
 
 import { NavBar } from "@/components/NavBar";
@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
       <body>
         <div className="flex flex-col min-h-screen pt-16">
           <NavBar />
-          <BgContainer />
+          <WelcomeBox />
           {children}
           <Footer />
         </div>
