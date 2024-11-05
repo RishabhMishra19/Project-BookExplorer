@@ -1,7 +1,6 @@
 import { BookReviewData } from "../constants/BookReviewData.js";
 
 const getBookReviewsByBookId = (bookId) => {
-  console.log({ bookId });
   return BookReviewData.filter(
     (sReview) => parseInt(bookId) === sReview.book_id
   );
