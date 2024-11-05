@@ -11,5 +11,5 @@ export const getInitialNavItem = (pathname) => {
 };
 
 export const isAuthRoute = (pathname) => {
-  return pathname.includes("auth");
+  return pathname.includes("login") || pathname.includes("signup");
 };

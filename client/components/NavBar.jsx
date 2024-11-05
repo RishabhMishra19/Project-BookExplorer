@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FaBookOpen } from "react-icons/fa";
 import { PiHandPeaceFill } from "react-icons/pi";
 
-export const NavBar = ({ activeTab, setActiveTab }) => {
+export const NavBar = ({ activeTab }) => {
   return (
     <header className="bg-teal-600 text-white shadow-md w-full fixed top-0 left-0 z-50">
       <nav className="px-4 py-4 flex justify-between items-center w-full px-[60px]">
@@ -22,7 +22,6 @@ export const NavBar = ({ activeTab, setActiveTab }) => {
                 ? "bg-white text-teal-700"
                 : "hover:bg-[rgba(0,0,0,0.1)]"
             }`}
-            onClick={() => setActiveTab("books")}
           >
             <FaBookOpen className="mr-2 text-lg" />
             Books
@@ -34,7 +33,6 @@ export const NavBar = ({ activeTab, setActiveTab }) => {
                 ? "bg-white text-teal-700"
                 : "hover:bg-[rgba(0,0,0,0.1)]"
             }`}
-            onClick={() => setActiveTab("authors")}
           >
             <FaUserCheck className="mr-1 text-lg" />
             Authors
@@ -46,7 +44,6 @@ export const NavBar = ({ activeTab, setActiveTab }) => {
                 ? "bg-white text-teal-700"
                 : "hover:bg-[rgba(0,0,0,0.1)]"
             }`}
-            onClick={() => setActiveTab("login")}
           >
             <MdOutlineLogin className="mr-2 text-lg" />
             Login
@@ -58,7 +55,6 @@ export const NavBar = ({ activeTab, setActiveTab }) => {
                 ? "bg-white text-teal-700"
                 : "hover:bg-[rgba(0,0,0,0.1)]"
             }`}
-            onClick={() => setActiveTab("signup")}
           >
             <PiHandPeaceFill className="mr-1 text-lg" />
             Signup

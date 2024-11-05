@@ -31,8 +31,10 @@ export const BookCard = ({ book }) => {
       </p>
       <StarRating rating={book.rating} />
       <Image
-        className="w-full h-96 object-cover"
-        src={"./DummyBookCover.png"}
+        className="object-cover"
+        src={"/DummyBookCover.png"}
+        width={300}
+        height={300}
         alt={book.title}
       />
       <p className="text-gray-600 mt-4 line-clamp-2 text-sm">

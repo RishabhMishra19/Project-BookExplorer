@@ -27,8 +27,10 @@ export const AuthorCard = ({ author }) => {
       </div>
       <StarRating rating={author.rating} />
       <Image
-        className="w-full h-96 object-cover"
-        src={"./AuthorImg.png"}
+        className="object-cover"
+        src={"/AuthorImg.png"}
+        width={300}
+        height={300}
         alt={author.name}
       />
       <p className="text-gray-600 mt-4 line-clamp-2 text-sm">
