@@ -23,7 +23,7 @@ export default function Home() {
     rating: 3.5,
     biography:
       "John Doe is an author known for his works in fiction, especially in fantasy and science fiction genres.",
-    born_date: "1975-06-12",
+    born_date: "2024-11-05T08:46:56.150Z",
     books: [],
     reviews: [],
   };
@@ -47,10 +47,10 @@ export default function Home() {
               <strong>Birth Year:</strong>{" "}
               {new Date(author.born_date).getFullYear()}
             </p>
-            <p className="text-teal-700 mb-4 flex items-center">
+            <div className="text-teal-700 mb-4 flex items-center">
               <strong className="mr-2">Rating:</strong>
               <StarRating rating={author.rating} fontSize={"13px"} />
-            </p>
+            </div>
             <p className="text-teal-800 mb-6">{author.biography}</p>
             <div
               onClick={openModal}
@@ -92,13 +92,15 @@ export default function Home() {
         </Link>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {/* <div class="bg-white p-6 rounded-lg shadow-md mb-8"> */}
-        <h2 class="text-2xl font-bold text-teal-800 mb-4">Write a Review</h2>
+        {/* <div className="bg-white p-6 rounded-lg shadow-md mb-8"> */}
+        <h2 className="text-2xl font-bold text-teal-800 mb-4">
+          Write a Review
+        </h2>
         <form action="#" method="POST">
-          <div class="mb-4">
+          <div className="mb-4">
             <label
-              for="name"
-              class="block text-teal-700 text-sm font-bold mb-2"
+              htmlFor="name"
+              className="block text-teal-700 text-sm font-bold mb-2"
             >
               Your Name:
             </label>
@@ -107,13 +109,13 @@ export default function Home() {
               id="name"
               name="name"
               required
-              class="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
-          <div class="mb-4">
+          <div className="mb-4">
             <label
-              for="rating"
-              class="block text-teal-700 text-sm font-bold mb-2"
+              htmlFor="rating"
+              className="block text-teal-700 text-sm font-bold mb-2"
             >
               Rating:
             </label>
@@ -121,7 +123,7 @@ export default function Home() {
               id="rating"
               name="rating"
               required
-              class="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
               <option value="">Select a rating</option>
               <option value="5">5 - Excellent</option>
@@ -131,10 +133,10 @@ export default function Home() {
               <option value="1">1 - Poor</option>
             </select>
           </div>
-          <div class="mb-6">
+          <div className="mb-6">
             <label
-              for="review-text"
-              class="block text-teal-700 text-sm font-bold mb-2"
+              htmlFor="review-text"
+              className="block text-teal-700 text-sm font-bold mb-2"
             >
               Your Review:
             </label>
@@ -143,12 +145,12 @@ export default function Home() {
               name="review-text"
               rows="4"
               required
-              class="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
           <button
             type="submit"
-            class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Submit Review
           </button>
