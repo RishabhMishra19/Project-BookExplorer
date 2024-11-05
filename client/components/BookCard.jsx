@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { StarRating } from "./StarRating";
 import Link from "next/link";

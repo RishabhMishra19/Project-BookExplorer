@@ -1,19 +1,12 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineBookOpen } from "react-icons/hi";
 import { FaUserCheck } from "react-icons/fa";
 import { MdOutlineLogin } from "react-icons/md";
 import Link from "next/link";
 import { FaBookOpen } from "react-icons/fa";
-import { getInitialNavItem } from "@/utils/genericUtils";
 import { PiHandPeaceFill } from "react-icons/pi";
 
-export const NavBar = () => {
-  const [activeTab, setActiveTab] = useState(
-    getInitialNavItem(location.pathname)
-  );
-
+export const NavBar = ({ activeTab, setActiveTab }) => {
   return (
     <header className="bg-teal-600 text-white shadow-md w-full fixed top-0 left-0 z-50">
       <nav className="px-4 py-4 flex justify-between items-center w-full px-[60px]">

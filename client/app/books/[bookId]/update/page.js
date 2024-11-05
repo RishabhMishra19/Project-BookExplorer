@@ -1,13 +1,16 @@
-import { AuthorCard } from "@/components/AuthorCard";
-import { AuthorFilters } from "@/components/AuthorFilters";
-import { IconButton } from "@/components/IconButton";
+import { AuthorCard } from "../../../../components/AuthorCard";
+import { AuthorFilters } from "../../../../components/AuthorFilters";
+import { IconButton } from "../../../../components/IconButton";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div>
       <div className="flex justify-between mx-[70px] border-b-[2px] pb-4 ml-[390px] mr-[60px] mb-4 items-center">
         <h2 className="text-3xl font-bold">Featured Authors</h2>
-        <IconButton>Add Author</IconButton>
+        <Link href={"/authors/create"}>
+          <IconButton>Add Author</IconButton>
+        </Link>
       </div>
       <div className="w-full h-max flex justify-center px-16">
         <div className="w-3/12 border-r-[1px] mr-3 px-3">

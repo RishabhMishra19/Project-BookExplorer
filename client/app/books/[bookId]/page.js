@@ -1,6 +1,6 @@
-import { AuthorCard } from "@/components/AuthorCard";
-import { AuthorFilters } from "@/components/AuthorFilters";
-import { IconButton } from "@/components/IconButton";
+import { AuthorCard } from "../../../components/AuthorCard";
+import { AuthorFilters } from "../../../components/AuthorFilters";
+import { IconButton } from "../../../components/IconButton";
 import Link from "next/link";
 
 export default function Home() {

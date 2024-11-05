@@ -1,5 +1,5 @@
-import { BookCard } from "@/components/BookCard";
-import { BookFilters } from "@/components/BookFilters";
+import { BookCard } from "../../../components/BookCard";
+import { BookFilters } from "../../../components/BookFilters";
 
 export default function Home() {
   return (

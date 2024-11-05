@@ -1,9 +1,9 @@
 "use client";
 
-import { BookCard } from "@/components/BookCard";
-import { BookFilters } from "@/components/BookFilters";
-import { IconButton } from "@/components/IconButton";
-import { PaginationFooter } from "@/components/PaginationFooter";
+import { BookCard } from "../../components/BookCard";
+import { BookFilters } from "../../components/BookFilters";
+import { IconButton } from "../../components/IconButton";
+import { PaginationFooter } from "../../components/PaginationFooter";
 import Link from "next/link";
 
 export default function Home() {
