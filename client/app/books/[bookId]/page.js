@@ -7,6 +7,7 @@ import { Modal } from "../../../components/Modal";
 import { use, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { GenericLoader } from "../../../components/GenericLoader";
+import { GenericError } from "../../../components/GenericError";
 
 const QUERY = gql`
   query getBookById($getBookByIdId: ID!) {
