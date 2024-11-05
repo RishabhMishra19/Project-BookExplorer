@@ -6,8 +6,39 @@ import { IconButton } from "../../components/IconButton";
 import { PaginationFooter } from "../../components/PaginationFooter";
 import Link from "next/link";
 import { WelcomeBox } from "../../components/WelcomeBox";
+import { gql, useQuery } from "@apollo/client";
+
+const QUERY = gql`
+  query GetBooks {
+    getBooks {
+      id
+      title
+      description
+      published_date
+      author {
+        id
+        name
+      }
+      avg_rating
+      total_reviews
+    }
+  }
+`;
 
 export default function Home() {
+  const { data, loading, error } = useQuery(QUERY);
+
+  const books = data?.getBooks ?? [];
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
   return (
     <div>
       <WelcomeBox />
@@ -23,19 +54,8 @@ export default function Home() {
         </div>
         <div className="w-10/12">
           <div className="flex flex-wrap justify-between">
-            {[1, 2, 3, 4, 5, 6].map((val) => (
-              <BookCard
-                key={val}
-                book={{
-                  id: 1,
-                  title: "To Kill a Mockingbird",
-                  author: "Harper Lee",
-                  rating: 3.5,
-                  description:
-                    "A novel about the serious issues of rape and racial inequality. A novel about the serious issues of rape and racial inequality",
-                  coverImage: "https://example.com/mockingbird.jpg",
-                }}
-              />
+            {books.map((book) => (
+              <BookCard key={book.id} book={book} />
             ))}
           </div>
           <PaginationFooter

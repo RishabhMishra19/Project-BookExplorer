@@ -1,7 +1,7 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
 
-export const StarRating = ({ rating, fontSize = "10px" }) => {
+export const StarRating = ({ rating, fontSize = "10px", totalReviews }) => {
   // Calculate the number of full, half, and empty stars
   const stars = Array.from({ length: 5 }, (_, index) => {
     const starValue = index + 0.5; // Allow for half stars
@@ -27,7 +27,7 @@ export const StarRating = ({ rating, fontSize = "10px" }) => {
       <p
         className={`text-[${fontSize}] ml-1 text-blue-400  cursor-pointer hover:underline`}
       >
-        ({3645})
+        ({totalReviews})
       </p>
     </div>
   );

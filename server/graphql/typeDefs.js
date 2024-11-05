@@ -16,6 +16,8 @@ export const typeDefs = gql`
     born_date: String!
     books: [Book!]
     reviews: [AuthorReview!]
+    avg_rating: Float!
+    total_reviews: Int!
   }
   type BookReview {
     id: ID!
@@ -32,6 +34,8 @@ export const typeDefs = gql`
     published_date: String!
     author: Author!
     reviews: [BookReview!]
+    avg_rating: Float!
+    total_reviews: Int!
   }
   type Query {
     getBooks: [Book!]

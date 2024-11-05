@@ -21,6 +21,7 @@ import {
   getBooksByAuthorId,
   updateBook,
 } from "../services/BookService.js";
+import { roundToClosestValue } from "../utils/ArrayUtils.js";
 
 export const resolvers = {
   Query: {
@@ -66,6 +67,15 @@ export const resolvers = {
     reviews: (parent) => {
       return getBookReviewsByBookId(parent.id);
     },
+    avg_rating: (parent) => {
+      const reviews = getBookReviewsByBookId(parent.id);
+      const totalRating = reviews.reduce((prev, cur) => prev + cur.rating, 0);
+      const totalReviews = reviews.length;
+      return roundToClosestValue(totalRating / totalReviews);
+    },
+    total_reviews: (parent) => {
+      return getBookReviewsByBookId(parent.id).length;
+    },
   },
   BookReview: {
     book: (parent, _, ctx) => {
@@ -78,6 +88,15 @@ export const resolvers = {
     },
     reviews: (parent) => {
       return getAuthorReviewsByAuthorId(parent.id);
+    },
+    avg_rating: (parent) => {
+      const reviews = getAuthorReviewsByAuthorId(parent.id);
+      const totalRating = reviews.reduce((prev, cur) => prev + cur.rating, 0);
+      const totalReviews = reviews.length;
+      return roundToClosestValue(totalRating / totalReviews);
+    },
+    total_reviews: (parent) => {
+      return getAuthorReviewsByAuthorId(parent.id).length;
     },
   },
   AuthorReview: {

@@ -5,6 +5,31 @@ import Image from "next/image";
 import { StarRating } from "../../../components/StarRating";
 import { Modal } from "../../../components/Modal";
 import { useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+
+const QUERY = gql`
+  query getBookById($getBookByIdId: ID!) {
+    getBookById(id: $getBookByIdId) {
+      id
+      title
+      description
+      published_date
+      author {
+        id
+        name
+      }
+      avg_rating
+      total_reviews
+      reviews {
+        created_at
+        id
+        rating
+        review
+        reviewer_email
+      }
+    }
+  }
+`;
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,16 +42,20 @@ export default function Home() {
     setIsModalOpen(false);
   };
 
-  const book = {
-    id: 1,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    rating: 3.5,
-    description:
-      "A novel about the serious issues of rape and racial inequality. A novel about the serious issues of rape and racial inequality",
-    coverImage: "https://example.com/mockingbird.jpg",
-    published_date: "2024-11-05T08:46:56.150Z",
-  };
+  const { data, loading, error } = useQuery(QUERY, {
+    variables: { getBookByIdId: 1 },
+  });
+
+  const book = data?.getBookById ?? {};
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
 
   return (
     <div className="bg-teal-50 flex items-center justify-center min-h-screen">
@@ -44,14 +73,18 @@ export default function Home() {
           </div>
           <div className="md:col-span-2">
             <p className="text-teal-600 mb-2">
-              <strong>Author:</strong> {book.author}
+              <strong>Author:</strong> {book.author.name}
             </p>
             <p className="text-teal-600 mb-2">
               <strong>Publication Date:</strong> {book.published_date}
             </p>
             <div className="text-teal-700 mb-4 flex items-center">
               <strong className="mr-2">Rating:</strong>
-              <StarRating rating={book.rating} fontSize={"13px"} />
+              <StarRating
+                rating={book.avg_rating}
+                fontSize={"13px"}
+                totalReviews={book.total_reviews}
+              />
             </div>
             <p className="text-teal-800 mb-6">{book.description}</p>
             <div

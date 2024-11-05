@@ -5,6 +5,7 @@ import { CiEdit } from "react-icons/ci";
 import Image from "next/image";
 
 export const BookCard = ({ book }) => {
+  console.log({ book });
   return (
     <div className="w-80 rounded overflow-hidden shadow-lg bg-white px-5 py-4 mb-8">
       <div className="flex justify-between items-center">
@@ -26,10 +27,10 @@ export const BookCard = ({ book }) => {
       <p className="text-gray-700 text-gray-500 text-xs mb-1">
         by{" "}
         <span className="font-bold hover:text-blue-500 cursor-pointer">
-          {book.author}
+          {book.author.name}
         </span>
       </p>
-      <StarRating rating={book.rating} />
+      <StarRating rating={book.avg_rating} totalReviews={book.total_reviews} />
       <Image
         className="object-cover"
         src={"/DummyBookCover.png"}
