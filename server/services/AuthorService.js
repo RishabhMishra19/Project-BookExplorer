@@ -1,11 +1,33 @@
 import { AuthorData } from "../constants/AuthorData.js";
-import { removeSingleElmInPlaceByIdx } from "../utils/ArrayUtils.js";
+import {
+  areDatesEqual,
+  removeSingleElmInPlaceByIdx,
+} from "../utils/genericUtils.js";
 
-const getAuthors = () => {
-  return AuthorData;
+const getAuthors = (filters, pagination) => {
+  const skip = parseInt(pagination.skip ?? 0);
+  const limit = parseInt(pagination.limit ?? 0);
+  const filteredData = AuthorData.filter((sAuthor) => {
+    if (filters["name"]) {
+      if (!sAuthor.name.toLowerCase().includes(filters["name"].toLowerCase())) {
+        return false;
+      }
+    }
+    if (filters["born_date"]) {
+      if (
+        new Date(sAuthor.born_date).getFullYear().toString() !==
+        filters["born_date"]
+      ) {
+        return false;
+      }
+    }
+    return true;
+  });
+  const paginatedData = filteredData.slice(skip * limit, (skip + 1) * limit);
+  return paginatedData;
 };
 
-const getAuthorById = ({ id }) => {
+const getAuthorById = (id) => {
   return AuthorData.find((sAuthor) => sAuthor.id === parseInt(id));
 };
 
@@ -17,7 +39,6 @@ const getAuthorsByIds = ({ ids }) => {
 };
 
 const createAuthor = (payload) => {
-  console.log({ payloadll: payload });
   const newAuthor = {
     id: AuthorData.length + 1,
     ...payload,

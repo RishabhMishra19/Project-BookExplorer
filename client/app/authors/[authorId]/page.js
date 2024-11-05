@@ -4,9 +4,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { StarRating } from "../../../components/StarRating";
 import { Modal } from "../../../components/Modal";
-import { useState } from "react";
+import { use, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import { GenericLoader } from "../../../components/GenericLoader";
+import { GenericError } from "../../../components/GenericError";
 
-export default function Home() {
+const QUERY = gql`
+  query getAuthorById($getAuthorByIdId: ID!) {
+    getAuthorById(id: $getAuthorByIdId) {
+      id
+      name
+      avg_rating
+      total_reviews
+      biography
+      born_date
+      reviews {
+        id
+        rating
+        review
+        created_at
+        reviewer_email
+      }
+    }
+  }
+`;
+
+export default function Home({ params }) {
+  const unwrappedParams = use(params);
+  const { authorId } = unwrappedParams;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -17,16 +42,19 @@ export default function Home() {
     setIsModalOpen(false);
   };
 
-  const author = {
-    id: "1",
-    name: "John Doe",
-    rating: 3.5,
-    biography:
-      "John Doe is an author known for his works in fiction, especially in fantasy and science fiction genres.",
-    born_date: "2024-11-05T08:46:56.150Z",
-    books: [],
-    reviews: [],
-  };
+  const { data, loading, error } = useQuery(QUERY, {
+    variables: { getAuthorByIdId: authorId, skip: !authorId },
+  });
+
+  const author = data?.getAuthorById ?? {};
+
+  if (loading) {
+    return <GenericLoader />;
+  }
+
+  if (error) {
+    return <GenericError message={error?.cause?.message} />;
+  }
 
   return (
     <div className="bg-teal-50 flex items-center justify-center min-h-screen">
@@ -49,7 +77,11 @@ export default function Home() {
             </p>
             <div className="text-teal-700 mb-4 flex items-center">
               <strong className="mr-2">Rating:</strong>
-              <StarRating rating={author.rating} fontSize={"13px"} />
+              <StarRating
+                rating={author.avg_rating}
+                fontSize={"13px"}
+                totalReviews={author.total_reviews}
+              />
             </div>
             <p className="text-teal-800 mb-6">{author.biography}</p>
             <div
@@ -92,7 +124,6 @@ export default function Home() {
         </Link>
       </div>
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {/* <div className="bg-white p-6 rounded-lg shadow-md mb-8"> */}
         <h2 className="text-2xl font-bold text-teal-800 mb-4">
           Write a Review
         </h2>

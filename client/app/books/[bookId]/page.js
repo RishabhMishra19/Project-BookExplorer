@@ -4,8 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { StarRating } from "../../../components/StarRating";
 import { Modal } from "../../../components/Modal";
-import { useState } from "react";
+import { use, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
+import { GenericLoader } from "../../../components/GenericLoader";
 
 const QUERY = gql`
   query getBookById($getBookByIdId: ID!) {
@@ -31,7 +32,9 @@ const QUERY = gql`
   }
 `;
 
-export default function Home() {
+export default function Home({ params }) {
+  const unwrappedParams = use(params);
+  const { bookId } = unwrappedParams;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -43,18 +46,17 @@ export default function Home() {
   };
 
   const { data, loading, error } = useQuery(QUERY, {
-    variables: { getBookByIdId: 1 },
+    variables: { getBookByIdId: bookId, skip: !bookId },
   });
 
   const book = data?.getBookById ?? {};
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <GenericLoader />;
   }
 
   if (error) {
-    console.error(error);
-    return null;
+    return <GenericError message={error.cause.message} />;
   }
 
   return (

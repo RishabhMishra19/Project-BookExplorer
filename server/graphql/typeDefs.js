@@ -37,10 +37,24 @@ export const typeDefs = gql`
     avg_rating: Float!
     total_reviews: Int!
   }
+  input BookFilter {
+    title: String
+    author: String
+    published_date: String
+  }
+  input AuthorFilter {
+    name: String
+    born_date: String
+  }
+  input Pagination {
+    skip: Int
+    limit: Int
+    sortBy: String
+  }
   type Query {
-    getBooks: [Book!]
+    getBooks(filters: BookFilter, pagination: Pagination): [Book!]
     getBookById(id: ID!): Book!
-    getAuthors: [Author!]
+    getAuthors(filters: AuthorFilter, pagination: Pagination): [Author!]
     getAuthorById(id: ID!): Author!
   }
   input CreateBookPayload {

@@ -15,3 +15,9 @@ export const roundToClosestValue = (num) => {
     Math.abs(curr - num) < Math.abs(prev - num) ? curr : prev
   );
 };
+
+export const areDatesEqual = (date1, date2) => {
+  const date1Str = new Date(date1).toISOString().split("T")[0];
+  const date2Str = new Date(date2).toISOString().split("T")[0];
+  return date1Str === date2Str;
+};

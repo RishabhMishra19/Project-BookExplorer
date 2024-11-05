@@ -25,7 +25,10 @@ export const AuthorCard = ({ author }) => {
           [{new Date(author.born_date).getFullYear()}]
         </div>
       </div>
-      <StarRating rating={author.rating} />
+      <StarRating
+        rating={author.avg_rating}
+        totalReviews={author.total_reviews}
+      />
       <Image
         className="object-cover"
         src={"/AuthorImg.png"}
@@ -37,9 +40,11 @@ export const AuthorCard = ({ author }) => {
         {author.biography}
       </p>
       <div className="flex justify-end">
-        <div className="font-bold text-white cursor-pointer  text-right bg-blue-500 hover:bg-blue-700 rounded-[5px] w-max px-2 py-1 mt-2">
-          Read more
-        </div>
+        <Link href={`/authors/${author.id}`}>
+          <div className="font-bold text-white cursor-pointer  text-right bg-blue-500 hover:bg-blue-700 rounded-[5px] w-max px-2 py-1 mt-2">
+            Read more
+          </div>
+        </Link>
       </div>
     </div>
   );

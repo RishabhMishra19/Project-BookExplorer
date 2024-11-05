@@ -11,7 +11,7 @@ export const WelcomeBox = () => {
         Welcome to BookExplorer
       </h1>
       <p className="text-2xl text-teal-500">
-        Discover, review, and explore your next favorite book
+        Discover, Review, and Explore your next favorite book
       </p>
       <div className="space-x-4">
         <Link

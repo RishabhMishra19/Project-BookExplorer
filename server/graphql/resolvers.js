@@ -21,15 +21,19 @@ import {
   getBooksByAuthorId,
   updateBook,
 } from "../services/BookService.js";
-import { roundToClosestValue } from "../utils/ArrayUtils.js";
+import { roundToClosestValue } from "../utils/genericUtils.js";
 
 export const resolvers = {
   Query: {
-    getBooks,
+    getBooks: (_, { filters, pagination }) => {
+      return getBooks(filters, pagination);
+    },
     getBookById: (_, { id }) => {
       return getBookById(id);
     },
-    getAuthors,
+    getAuthors: (_, { filters, pagination }) => {
+      return getAuthors(filters, pagination);
+    },
     getAuthorById: (_, { id }) => {
       return getAuthorById(id);
     },

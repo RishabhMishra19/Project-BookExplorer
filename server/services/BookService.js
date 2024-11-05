@@ -1,8 +1,39 @@
+import { AuthorData } from "../constants/AuthorData.js";
 import { BookData } from "../constants/BookData.js";
-import { removeSingleElmInPlaceByIdx } from "../utils/ArrayUtils.js";
+import {
+  areDatesEqual,
+  removeSingleElmInPlaceByIdx,
+} from "../utils/genericUtils.js";
 
-const getBooks = () => {
-  return BookData;
+const getBooks = (filters, pagination) => {
+  const skip = parseInt(pagination.skip ?? 0);
+  const limit = parseInt(pagination.limit ?? 0);
+  const filteredData = BookData.filter((sBook) => {
+    if (filters["title"]) {
+      if (!sBook.title.toLowerCase().includes(filters["title"].toLowerCase())) {
+        return false;
+      }
+    }
+    if (filters["author"]) {
+      const author = AuthorData.find(
+        (sAuthor) => sAuthor.id === sBook.author_id
+      );
+      if (
+        !author.name.toLowerCase().includes(filters["author"].toLowerCase())
+      ) {
+        return false;
+      }
+    }
+    if (filters["published_date"]) {
+      if (!areDatesEqual(filters["published_date"], sBook.published_date)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  const paginatedData = filteredData.slice(skip * limit, (skip + 1) * limit);
+  return paginatedData;
 };
 
 const getBookById = (id) => {
