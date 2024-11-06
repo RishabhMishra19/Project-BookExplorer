@@ -19,7 +19,7 @@ const getBooks = (filters, pagination) => {
         (sAuthor) => sAuthor.id === sBook.author_id
       );
       if (
-        !author.name.toLowerCase().includes(filters["author"].toLowerCase())
+        !author?.name.toLowerCase().includes(filters["author"].toLowerCase())
       ) {
         return false;
       }

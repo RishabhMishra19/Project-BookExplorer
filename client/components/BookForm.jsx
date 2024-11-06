@@ -1,6 +1,51 @@
-import React from "react";
+"use client";
 
-export const BookForm = ({ isUpdating }) => {
+import React, { useState } from "react";
+import { GenericLoader } from "./GenericLoader";
+import { GenericError } from "./GenericError";
+import { gql, useQuery } from "@apollo/client";
+
+const QUERY = gql`
+  query GetAuthors($pagination: Pagination, $filters: AuthorFilter) {
+    getAuthors(pagination: $pagination, filters: $filters) {
+      id
+      name
+    }
+  }
+`;
+
+export const BookForm = ({
+  isUpdate,
+  onSubmit,
+  initialData = {},
+  isSubmitting = true,
+}) => {
+  const [formData, setFormData] = useState(initialData);
+
+  const { data, loading, error } = useQuery(QUERY, {
+    variables: { filters: {}, pagination: { skip: 0, limit: 100 } },
+  });
+
+  const authors = data?.getAuthors ?? [];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((pval) => ({
+      ...pval,
+      [name]: value,
+    }));
+  };
+
+  if (loading) {
+    return <GenericLoader />;
+  }
+
+  if (error) {
+    return (
+      <GenericError message={error.cause?.message ?? "Something went wrong"} />
+    );
+  }
+
   return (
     <form action="#" method="POST">
       <div className="mb-4">
@@ -16,46 +61,49 @@ export const BookForm = ({ isUpdating }) => {
           name="title"
           required
           className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          value={formData.title ?? ""}
+          onChange={handleChange}
         />
       </div>
       <div className="mb-4">
         <label
-          htmlFor="author"
+          htmlFor="author_id"
           className="block text-teal-700 text-sm font-bold mb-2"
         >
           Author:
         </label>
         <select
-          id="author"
-          name="author"
+          id="author_id"
+          name="author_id"
           required
           className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          value={formData.author_id ?? ""}
+          onChange={handleChange}
         >
-          <option value="">Select an author</option>
-          <option value="1">Jane Austen</option>
-          <option value="2">George Orwell</option>
-          <option value="3">J.K. Rowling</option>
-          <option value="4">Ernest Hemingway</option>
-          <option value="5">Agatha Christie</option>
-          <option value="6">Mark Twain</option>
-          <option value="7">Virginia Woolf</option>
-          <option value="8">Charles Dickens</option>
-          <option value="9">Leo Tolstoy</option>
-          <option value="10">Gabriel García Márquez</option>
+          <option key="" value="">
+            Select an author
+          </option>
+          {authors.map((author) => (
+            <option key={author.id} value={author.id}>
+              {author.name}
+            </option>
+          ))}
         </select>
       </div>
       <div className="mb-4">
         <label
-          htmlFor="birth-date"
+          htmlFor="published_date"
           className="block text-teal-700 text-sm font-bold mb-2"
         >
           Published Date:
         </label>
         <input
           type="date"
-          id="birth-date"
-          name="birth-date"
+          id="published_date"
+          name="published_date"
           className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          value={formData.published_date ?? ""}
+          onChange={handleChange}
         />
       </div>
       <div className="mb-4">
@@ -70,14 +118,26 @@ export const BookForm = ({ isUpdating }) => {
           name="description"
           rows="4"
           className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+          value={formData.description ?? ""}
+          onChange={handleChange}
         />
       </div>
-      <button
-        type="submit"
-        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        {isUpdating ? "Update" : "Add"} Book
-      </button>
+      {isSubmitting ? (
+        <div className="w-full bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline  flex justify-center">
+          Submitting...
+        </div>
+      ) : (
+        <button
+          type="submit"
+          className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            onSubmit(formData);
+          }}
+        >
+          {isUpdate ? "Update" : "Add"} Book
+        </button>
+      )}
     </form>
   );
 };

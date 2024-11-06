@@ -57,6 +57,7 @@ export const AuthorFilters = ({ filters, setFilters }) => {
           value={debouncedFilters.born_date ?? ""}
           onChange={handleChange}
         >
+          <option value="">Select Year</option>
           {years.map((year) => (
             <option key={year} value={year}>
               {year}
