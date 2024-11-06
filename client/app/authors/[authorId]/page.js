@@ -10,8 +10,8 @@ import { GenericLoader } from "../../../components/GenericLoader";
 import { GenericError } from "../../../components/GenericError";
 
 const QUERY = gql`
-  query getAuthorById($getAuthorByIdId: ID!) {
-    getAuthorById(id: $getAuthorByIdId) {
+  query getAuthorById($getAuthorById: ID!) {
+    getAuthorById(id: $getAuthorById) {
       id
       name
       avg_rating
@@ -43,7 +43,7 @@ export default function Home({ params }) {
   };
 
   const { data, loading, error } = useQuery(QUERY, {
-    variables: { getAuthorByIdId: authorId, skip: !authorId },
+    variables: { getAuthorById: authorId, skip: !authorId },
   });
 
   const author = data?.getAuthorById ?? {};

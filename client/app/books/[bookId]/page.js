@@ -10,8 +10,8 @@ import { GenericLoader } from "../../../components/GenericLoader";
 import { GenericError } from "../../../components/GenericError";
 
 const QUERY = gql`
-  query getBookById($getBookByIdId: ID!) {
-    getBookById(id: $getBookByIdId) {
+  query getBookById($getBookById: ID!) {
+    getBookById(id: $getBookById) {
       id
       title
       description
@@ -47,7 +47,7 @@ export default function Home({ params }) {
   };
 
   const { data, loading, error } = useQuery(QUERY, {
-    variables: { getBookByIdId: bookId, skip: !bookId },
+    variables: { getBookById: bookId, skip: !bookId },
   });
 
   const book = data?.getBookById ?? {};

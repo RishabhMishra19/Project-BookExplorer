@@ -82,7 +82,7 @@ export const AuthorForm = ({
             onSubmit(formData);
           }}
         >
-          {isUpdate ? "Update" : "Add"} Book
+          {isUpdate ? "Update" : "Add"} Author
         </button>
       )}
     </form>

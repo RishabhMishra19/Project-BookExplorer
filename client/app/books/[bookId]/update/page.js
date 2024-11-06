@@ -10,8 +10,8 @@ import { GenericError } from "../../../../components/GenericError";
 import toast, { Toaster } from "react-hot-toast";
 
 const QUERY = gql`
-  query getBookById($getBookByIdId: ID!) {
-    getBookById(id: $getBookByIdId) {
+  query getBookById($getBookById: ID!) {
+    getBookById(id: $getBookById) {
       id
       title
       description
@@ -38,7 +38,7 @@ export default function Home({ params }) {
   const router = useRouter();
 
   const getBookMetaData = useQuery(QUERY, {
-    variables: { getBookByIdId: bookId, skip: !bookId },
+    variables: { getBookById: bookId, skip: !bookId },
   });
 
   const book = getBookMetaData?.data?.getBookById ?? {};
@@ -54,7 +54,7 @@ export default function Home({ params }) {
     })
       .then(() => {
         router.push("/books");
-        toast.success("Successfully Created!");
+        toast.success("Successfully Updated!");
       })
       .catch((e) => {
         toast.error(
