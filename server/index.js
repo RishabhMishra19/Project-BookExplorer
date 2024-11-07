@@ -2,7 +2,6 @@ const { typeDefs } = require("./graphql/typeDefs.js");
 const { resolvers } = require("./graphql/resolvers.js");
 const { ApolloServer } = require("apollo-server");
 const { authorLoader, bookLoader } = require("./graphql/dataLoaders.js");
-const { sequelizeClient } = require("./sequelizeClient.js");
 const db = require("./models/index.js");
 
 const server = new ApolloServer({

@@ -1,6 +1,5 @@
 const { AuthorData } = require("../constants/AuthorData.js");
 const db = require("../models/index.js");
-const { sequelizeClient } = require("../sequelizeClient.js");
 const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
 const { DataTypes } = require("sequelize");
 const Author = require("../models/Author.js")(db.sequelize, DataTypes);
