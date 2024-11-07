@@ -19,8 +19,8 @@ export default function Home() {
 
   const handleSubmit = (payload) => {
     createAuthor({ variables: { payload } })
-      .then(() => {
-        router.push("/authors");
+      .then((res) => {
+        router.replace(`/authors/${res.data.createAuthor.id}`);
         toast.success("Successfully Created!");
       })
       .catch((e) => {

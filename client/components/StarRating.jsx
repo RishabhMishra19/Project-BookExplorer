@@ -24,11 +24,13 @@ export const StarRating = ({ rating, fontSize = "10px", totalReviews }) => {
     <div className="flex items-center">
       <p className={`text-[${fontSize}] mr-1`}>{rating}</p>
       {stars}
-      <p
-        className={`text-[${fontSize}] ml-1 text-blue-400  cursor-pointer hover:underline`}
-      >
-        ({totalReviews})
-      </p>
+      {totalReviews && (
+        <p
+          className={`text-[${fontSize}] ml-1 text-blue-400  cursor-pointer hover:underline`}
+        >
+          ({totalReviews})
+        </p>
+      )}
     </div>
   );
 };

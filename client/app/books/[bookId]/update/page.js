@@ -52,7 +52,7 @@ export default function Home({ params }) {
       },
     })
       .then(() => {
-        router.push("/books");
+        router.replace(`/books${book.id}`);
         toast.success("Successfully Updated!");
       })
       .catch((e) => {

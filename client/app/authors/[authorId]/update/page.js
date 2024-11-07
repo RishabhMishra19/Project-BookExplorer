@@ -48,7 +48,7 @@ export default function Home({ params }) {
       },
     })
       .then(() => {
-        router.push("/authors");
+        router.replace(`/authors${author.id}`);
         toast.success("Successfully Updated!");
       })
       .catch((e) => {

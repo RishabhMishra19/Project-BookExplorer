@@ -19,8 +19,8 @@ export default function Home() {
 
   const handleSubmit = (payload) => {
     createBook({ variables: { payload } })
-      .then(() => {
-        router.push("/books");
+      .then((res) => {
+        router.replace(`/books/${res.data.createBook.id}`);
         toast.success("Successfully Created!");
       })
       .catch((e) => {

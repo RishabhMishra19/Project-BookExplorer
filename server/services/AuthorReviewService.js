@@ -7,6 +7,7 @@ const getAuthorReviewsByAuthorId = (authorId) => {
 };
 
 const createAuthorReview = (authorId, payload) => {
+  console.log({ authorId, payload });
   const newAuthorReview = {
     id: AuthorReviewData.length + 1,
     created_at: new Date().toISOString(),
