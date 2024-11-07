@@ -19,8 +19,5 @@
       "src": "/(.*)",
       "dest": "client/.next/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
