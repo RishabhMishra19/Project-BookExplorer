@@ -1,7 +1,41 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended", // Basic ESLint recommended rules
+    "plugin:react/recommended", // React-specific linting rules
+    "plugin:react-hooks/recommended" // React hooks linting rules
+  ],
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
+    "ecmaVersion": 2020, // Modern JavaScript (ES2020) features
+    "sourceType": "module", // Allow import/export syntax
+    "requireConfigFile": false
+  },
+  "env": {
+    "browser": true, // Enable browser globals (like `window`)
+    "node": true // Enable Node.js globals (for server-side code)
+  },
+  "plugins": [
+    "react", // React-specific rules
+    "react-hooks" // React Hooks-specific linting rules
+  ],
+  "rules": {
+    // Basic ESLint rules
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }], // Warn for unused variables, except for those prefixed with _
+    "no-console": "warn", // Warn when console.log is used
+    "no-debugger": "warn", // Warn when debugger is used
+    "eqeqeq": ["error", "always"], // Enforce strict equality (===)
+    "curly": "error", // Enforce consistent braces for all control statements (if, else, etc.)
+    "semi": ["error", "always"], // Enforce semicolons at the end of statements
+    "quotes": ["error", "single"], // Enforce single quotes for strings
+    "indent": ["error", 2], // Enforce 2-space indentation
+
+    // React-specific rules
+    "react/react-in-jsx-scope": "off", // Not needed with Next.js (since React is auto-imported)
+    "react/prop-types": "off", // Turn off prop-types validation (use TypeScript or Flow instead if needed)
+
+    // React Hooks rules
+    "react-hooks/rules-of-hooks": "error", // Enforce rules of hooks
+    "react-hooks/exhaustive-deps": "warn" // Warn about missing dependencies in useEffect
   }
 }

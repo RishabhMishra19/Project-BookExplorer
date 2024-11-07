@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useRef } from "react";
 
 export const Modal = ({ isOpen, onClose, children }) => {

@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { HiOutlineBookOpen } from "react-icons/hi";
 import { FaUserCheck } from "react-icons/fa";

@@ -1,5 +1,4 @@
 "use client";
-
 import { AuthorCard } from "../../components/AuthorCard";
 import { AuthorFilters } from "../../components/AuthorFilters";
 import { IconButton } from "../../components/IconButton";

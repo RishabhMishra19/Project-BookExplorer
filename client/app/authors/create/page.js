@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { AuthorForm } from "../../../components/AuthorForm";
 import { gql, useMutation } from "@apollo/client";

@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { GenericLoader } from "./GenericLoader";
 import { GenericError } from "./GenericError";
