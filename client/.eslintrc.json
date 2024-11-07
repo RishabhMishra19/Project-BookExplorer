@@ -27,7 +27,7 @@
     "eqeqeq": ["error", "always"], // Enforce strict equality (===)
     "curly": "error", // Enforce consistent braces for all control statements (if, else, etc.)
     "semi": ["error", "always"], // Enforce semicolons at the end of statements
-    "quotes": ["error", "single"], // Enforce single quotes for strings
+    // "quotes": ["error", "single"], // Enforce single quotes for strings
     "indent": ["error", 2], // Enforce 2-space indentation
 
     // React-specific rules
