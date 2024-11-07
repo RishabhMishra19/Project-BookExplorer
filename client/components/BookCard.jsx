@@ -25,9 +25,11 @@ export const BookCard = ({ book }) => {
       </div>
       <p className="text-gray-700 text-gray-500 text-xs mb-1">
         by{" "}
-        <span className="font-bold hover:text-blue-500 cursor-pointer">
-          {book.author.name}
-        </span>
+        <Link href={`/authors/${book.author.id}`}>
+          <span className="font-bold hover:text-blue-500 cursor-pointer">
+            {book.author.name}
+          </span>
+        </Link>
       </p>
       <StarRating rating={book.avg_rating} totalReviews={book.total_reviews} />
       <Image
