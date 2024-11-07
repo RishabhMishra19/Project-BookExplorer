@@ -1,4 +1,4 @@
-import { AuthorReviewData } from "../constants/AuthorReviewData.js";
+const { AuthorReviewData } = require("../constants/AuthorReviewData.js");
 
 const getAuthorReviewsByAuthorId = (authorId) => {
   return AuthorReviewData.filter(
@@ -7,7 +7,6 @@ const getAuthorReviewsByAuthorId = (authorId) => {
 };
 
 const createAuthorReview = (authorId, payload) => {
-  console.log({ authorId, payload });
   const newAuthorReview = {
     id: AuthorReviewData.length + 1,
     created_at: new Date().toISOString(),
@@ -18,4 +17,4 @@ const createAuthorReview = (authorId, payload) => {
   return newAuthorReview;
 };
 
-export { getAuthorReviewsByAuthorId, createAuthorReview };
+module.exports = { getAuthorReviewsByAuthorId, createAuthorReview };

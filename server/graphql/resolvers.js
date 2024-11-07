@@ -1,29 +1,29 @@
-import {
+const {
   createAuthorReview,
   getAuthorReviewsByAuthorId,
-} from "../services/AuthorReviewService.js";
-import {
+} = require("../services/AuthorReviewService.js");
+const {
   createAuthor,
   deleteAuthor,
   getAuthorById,
   getAuthors,
   updateAuthor,
-} from "../services/AuthorService.js";
-import {
+} = require("../services/AuthorService.js");
+const {
   createBookReview,
   getBookReviewsByBookId,
-} from "../services/BookReviewService.js";
-import {
+} = require("../services/BookReviewService.js");
+const {
   createBook,
   deleteBook,
   getBookById,
   getBooks,
   getBooksByAuthorId,
   updateBook,
-} from "../services/BookService.js";
-import { roundToClosestValue } from "../utils/genericUtils.js";
+} = require("../services/BookService.js");
+const { roundToClosestValue } = require("../utils/genericUtils.js");
 
-export const resolvers = {
+const resolvers = {
   Query: {
     getBooks: (_, { filters, pagination }) => {
       return getBooks(filters, pagination);
@@ -109,3 +109,5 @@ export const resolvers = {
     },
   },
 };
+
+module.exports = { resolvers };

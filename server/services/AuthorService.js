@@ -1,30 +1,40 @@
-import { AuthorData } from "../constants/AuthorData.js";
-import {
-  areDatesEqual,
-  removeSingleElmInPlaceByIdx,
-} from "../utils/genericUtils.js";
+const { AuthorData } = require("../constants/AuthorData.js");
+const db = require("../models/index.js");
+const { sequelizeClient } = require("../sequelizeClient.js");
+const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
+const { DataTypes } = require("sequelize");
+const Author = require("../models/Author.js")(db.sequelize, DataTypes);
 
-const getAuthors = (filters, pagination) => {
+const getAuthors = async (filters, pagination) => {
   const skip = parseInt(pagination.skip ?? 0);
   const limit = parseInt(pagination.limit ?? 0);
-  const filteredData = AuthorData.filter((sAuthor) => {
-    if (filters["name"]) {
-      if (!sAuthor.name.toLowerCase().includes(filters["name"].toLowerCase())) {
-        return false;
-      }
-    }
-    if (filters["born_date"]) {
-      if (
-        new Date(sAuthor.born_date).getFullYear().toString() !==
-        filters["born_date"]
-      ) {
-        return false;
-      }
-    }
-    return true;
+  const offset = skip * limit;
+
+  const whereClause = {};
+
+  if (filters.name) {
+    whereClause.name = {
+      [Sequelize.Op.like]: `%${filters.name}%`,
+    };
+  }
+
+  if (filters.born_date) {
+    whereClause.born_date = filters.born_date;
+  }
+
+  const result = await Author.findAndCountAll({
+    where: whereClause,
+    limit,
+    offset,
+    order: [["name", "ASC"]],
   });
-  const paginatedData = filteredData.slice(skip * limit, (skip + 1) * limit);
-  return paginatedData;
+
+  return {
+    authors: result.rows,
+    totalCount: result.count,
+    totalPages: Math.ceil((result.count + limit - 1) / limit),
+    currentPage: skip + 1,
+  };
 };
 
 const getAuthorById = (id) => {
@@ -62,7 +72,7 @@ const deleteAuthor = (id) => {
   return id;
 };
 
-export {
+module.exports = {
   getAuthors,
   getAuthorById,
   getAuthorsByIds,

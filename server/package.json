@@ -3,19 +3,28 @@
   "version": "1.0.0",
   "description": "Server for book-explorer app",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo",
+    "migrate:status": "npx sequelize-cli db:migrate:status"
   },
   "author": "Rishabh Mishra",
   "license": "ISC",
   "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.43",
+    "@sequelize/postgres": "^7.0.0-alpha.43",
     "apollo-server": "^3.13.0",
     "cors": "^2.8.5",
-    "dataloader": "^2.2.2"
+    "dataloader": "^2.2.2",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.7",
+    "sequelize-cli": "^6.6.2"
   }
 }

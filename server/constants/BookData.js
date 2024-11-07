@@ -1,4 +1,4 @@
-export let BookData = [
+let BookData = [
   {
     id: 1,
     title: "title 1",
@@ -28,3 +28,5 @@ export let BookData = [
     author_id: 3,
   },
 ];
+
+module.exports = { BookData };

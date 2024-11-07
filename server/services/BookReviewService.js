@@ -1,4 +1,4 @@
-import { BookReviewData } from "../constants/BookReviewData.js";
+const { BookReviewData } = require("../constants/BookReviewData.js");
 
 const getBookReviewsByBookId = (bookId) => {
   return BookReviewData.filter(
@@ -17,4 +17,4 @@ const createBookReview = (bookId, payload) => {
   return newBookReview;
 };
 
-export { getBookReviewsByBookId, createBookReview };
+module.exports = { getBookReviewsByBookId, createBookReview };

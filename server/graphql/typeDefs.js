@@ -1,6 +1,6 @@
-import { gql } from "apollo-server";
+const { gql } = require("apollo-server");
 
-export const typeDefs = gql`
+const typeDefs = gql`
   type AuthorReview {
     id: ID!
     review: String
@@ -51,10 +51,19 @@ export const typeDefs = gql`
     limit: Int
     sortBy: String
   }
+  type GetAuthorsResponse {
+    authors: [Author!]
+    totalCount: Int!
+    totalPages: Int!
+    currentPage: Int!
+  }
   type Query {
     getBooks(filters: BookFilter, pagination: Pagination): [Book!]
     getBookById(id: ID!): Book!
-    getAuthors(filters: AuthorFilter, pagination: Pagination): [Author!]
+    getAuthors(
+      filters: AuthorFilter
+      pagination: Pagination
+    ): GetAuthorsResponse
     getAuthorById(id: ID!): Author!
   }
   input CreateBookPayload {
@@ -106,3 +115,5 @@ export const typeDefs = gql`
     ): AuthorReview!
   }
 `;
+
+module.exports = { typeDefs };

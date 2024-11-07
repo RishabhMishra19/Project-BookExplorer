@@ -13,12 +13,17 @@ import { useState } from "react";
 const QUERY = gql`
   query GetAuthors($pagination: Pagination, $filters: AuthorFilter) {
     getAuthors(pagination: $pagination, filters: $filters) {
-      id
-      name
-      avg_rating
-      total_reviews
-      biography
-      born_date
+      authors {
+        id
+        name
+        avg_rating
+        total_reviews
+        biography
+        born_date
+      }
+      totalCount
+      totalPages
+      currentPage
     }
   }
 `;
@@ -29,7 +34,7 @@ export default function Home() {
     variables: { filters, pagination: { skip: 0, limit: 10 } },
   });
 
-  const authors = data?.getAuthors ?? [];
+  const authors = data?.getAuthors?.authors ?? [];
 
   return (
     <div>

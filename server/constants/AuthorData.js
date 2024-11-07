@@ -1,4 +1,4 @@
-export let AuthorData = [
+let AuthorData = [
   {
     id: 1,
     name: "name 1",
@@ -24,3 +24,5 @@ export let AuthorData = [
     born_date: "2021-11-04T12:34:56.789Z",
   },
 ];
+
+module.exports = { AuthorData };

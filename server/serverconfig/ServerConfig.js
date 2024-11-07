@@ -1,8 +1,10 @@
-import { config } from "dotenv";
+const { config } = require("dotenv");
 config();
 
-export const ServerConfig = {
+const ServerConfig = {
   PORT: process.env.PORT || 4001,
   ENV: process.env.ENV || "dev",
   isEnvDev: () => ServerConfig.ENV === "dev",
 };
+
+module.exports = { ServerConfig };

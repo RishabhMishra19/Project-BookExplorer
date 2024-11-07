@@ -1,9 +1,9 @@
-import { AuthorData } from "../constants/AuthorData.js";
-import { BookData } from "../constants/BookData.js";
-import {
+const { AuthorData } = require("../constants/AuthorData.js");
+const { BookData } = require("../constants/BookData.js");
+const {
   areDatesEqual,
   removeSingleElmInPlaceByIdx,
-} from "../utils/genericUtils.js";
+} = require("../utils/genericUtils.js");
 
 const getBooks = (filters, pagination) => {
   const skip = parseInt(pagination.skip ?? 0);
@@ -75,7 +75,7 @@ const deleteBook = (id) => {
   return id;
 };
 
-export {
+module.exports = {
   getBooks,
   getBookById,
   getBooksByAuthorId,

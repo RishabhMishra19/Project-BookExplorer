@@ -1,7 +1,9 @@
-import { typeDefs } from "./graphql/typeDefs.js";
-import { resolvers } from "./graphql/resolvers.js";
-import { ApolloServer } from "apollo-server";
-import { authorLoader, bookLoader } from "./graphql/dataLoaders.js";
+const { typeDefs } = require("./graphql/typeDefs.js");
+const { resolvers } = require("./graphql/resolvers.js");
+const { ApolloServer } = require("apollo-server");
+const { authorLoader, bookLoader } = require("./graphql/dataLoaders.js");
+const { sequelizeClient } = require("./sequelizeClient.js");
+const db = require("./models/index.js");
 
 const server = new ApolloServer({
   typeDefs,
@@ -14,6 +16,15 @@ const server = new ApolloServer({
   },
 });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+db.sequelize
+  .authenticate()
+  .then(() => {
+    console.log("DB Connection has been established successfully.");
+    server
+      .listen()
+      .then(({ url }) => {
+        console.log(`🚀  Server ready at ${url}`);
+      })
+      .catch((error) => console.error("Unable to start the server:", error));
+  })
+  .catch((error) => console.error("Unable to connect to the database:", error));

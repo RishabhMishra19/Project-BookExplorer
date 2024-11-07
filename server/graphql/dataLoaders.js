@@ -1,6 +1,6 @@
-import DataLoader from "dataloader";
-import { getAuthorsByIds } from "../services/AuthorService.js";
-import { getBooksByIds } from "../services/BookService.js";
+const DataLoader = require("dataloader");
+const { getAuthorsByIds } = require("../services/AuthorService.js");
+const { getBooksByIds } = require("../services/BookService.js");
 
 const authorLoader = new DataLoader(async (ids) => {
   const authors = getAuthorsByIds({ ids });
@@ -20,4 +20,4 @@ const bookLoader = new DataLoader(async (ids) => {
   return ids.map((id) => bookMap[id]);
 });
 
-export { authorLoader, bookLoader };
+module.exports = { authorLoader, bookLoader };
