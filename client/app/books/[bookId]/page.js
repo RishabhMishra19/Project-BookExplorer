@@ -13,6 +13,7 @@ import {
   CREATE_BOOK_REVIEW_MUTATION,
   GET_BOOK_BY_ID_QUERY,
 } from "../../../graphql/bookGqlStrs";
+import { ReviewDetails } from "../../../components/ReviewDetails";
 
 export default function BookDetails({ params }) {
   const unwrappedParams = use(params);
@@ -31,7 +32,7 @@ export default function BookDetails({ params }) {
   };
 
   const getBookMetaData = useQuery(GET_BOOK_BY_ID_QUERY, {
-    variables: { getBookById: bookId, skip: !bookId },
+    variables: { getBookById: parseInt(bookId), skip: !bookId },
   });
 
   const book = getBookMetaData.data?.getBookById ?? {};
@@ -105,13 +106,7 @@ export default function BookDetails({ params }) {
             </p>
           </h2>
           {(book.reviews ?? []).map((review) => (
-            <div className="border-b border-teal-200 pb-4" key={review.id}>
-              <p className="text-teal-800  font-semibold text-lg">
-                {review.reviewer_email}
-              </p>
-              <StarRating rating={book.avg_rating} fontSize={"13px"} />
-              <p className="text-teal-700 mt-2">{review.review}</p>
-            </div>
+            <ReviewDetails key={review.id} review={review} />
           ))}
         </div>
         <Link

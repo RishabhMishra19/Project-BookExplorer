@@ -19,7 +19,7 @@ export default function UpdateBook({ params }) {
   const router = useRouter();
 
   const getBookMetaData = useQuery(GET_BOOK_BY_ID_QUERY, {
-    variables: { getBookById: bookId, skip: !bookId },
+    variables: { getBookById: parseInt(bookId), skip: !bookId },
   });
 
   const book = getBookMetaData?.data?.getBookById ?? {};

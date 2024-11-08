@@ -14,6 +14,7 @@ import {
   CREATE_AUTHOR_REVIEW_MUTATION,
   GET_AUTHOR_BY_ID_QUERY,
 } from "../../../graphql/authorGqlStrs";
+import { ReviewDetails } from "../../../components/ReviewDetails";
 
 export default function AuthorDetails({ params }) {
   const unwrappedParams = use(params);
@@ -32,7 +33,7 @@ export default function AuthorDetails({ params }) {
   };
 
   const getAuthorMetaData = useQuery(GET_AUTHOR_BY_ID_QUERY, {
-    variables: { getAuthorById: authorId, skip: !authorId },
+    variables: { getAuthorById: parseInt(authorId), skip: !authorId },
   });
 
   const author = getAuthorMetaData.data?.getAuthorById ?? {};
@@ -42,6 +43,7 @@ export default function AuthorDetails({ params }) {
       .then(() => {
         toast.success("Successfully Created!");
         setIsModalOpen(false);
+        getAuthorMetaData.refetch();
       })
       .catch((e) => {
         toast.error(
@@ -99,25 +101,9 @@ export default function AuthorDetails({ params }) {
           <h2 className="text-2xl font-bold text-teal-800 mb-4 border-b-[1px] border-teal-100 pb-2">
             Recent Reviews
           </h2>
-          <div className="space-y-4">
-            <div className="border-b border-teal-200 pb-4">
-              <p className="text-teal-800  font-semibold">John Doe</p>
-              <p className="text-teal-600">Rating: 5/5</p>
-              <p className="text-teal-700 mt-2">
-                {
-                  "This book was amazing! I couldn't put it down. The characters were well-developed and the plot kept me guessing until the very end."
-                }
-              </p>
-            </div>
-            <div className="border-b border-teal-200 pb-4">
-              <p className="text-teal-800 font-semibold">Jane Smith</p>
-              <p className="text-teal-600">Rating: 4/5</p>
-              <p className="text-teal-700 mt-2">
-                A great read overall. The pacing was a bit slow in the middle,
-                but the ending more than made up for it. Highly recommended!
-              </p>
-            </div>
-          </div>
+          {(author.reviews ?? []).map((review) => (
+            <ReviewDetails key={review.id} review={review} />
+          ))}
         </div>
         <Link
           href="/books"

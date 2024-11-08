@@ -19,7 +19,7 @@ export default function UpdateAuthor({ params }) {
   const router = useRouter();
 
   const getAuthorMetaData = useQuery(GET_AUTHOR_BY_ID_QUERY, {
-    variables: { getAuthorById: authorId, skip: !authorId },
+    variables: { getAuthorById: parseInt(authorId), skip: !authorId },
   });
 
   const author = getAuthorMetaData?.data?.getAuthorById ?? {};
