@@ -2,7 +2,7 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    url: process.env.POSTGRES_URL,
+    url: process.env.POSTGRES_URL_NO_SSL,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
@@ -12,7 +12,7 @@ module.exports = {
     },
   },
   test: {
-    url: process.env.POSTGRES_URL,
+    url: process.env.POSTGRES_URL_NO_SSL,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
@@ -22,7 +22,7 @@ module.exports = {
     },
   },
   production: {
-    url: process.env.POSTGRES_URL,
+    url: process.env.POSTGRES_URL_NO_SSL,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
