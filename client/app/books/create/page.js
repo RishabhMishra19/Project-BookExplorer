@@ -1,21 +1,14 @@
 "use client";
 import Link from "next/link";
 import { BookForm } from "../../../components/BookForm";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { CREATE_BOOK_MUTATION } from "../../../graphql/bookGqlStrs";
 
-const CREATE_BOOK = gql`
-  mutation CreateBook($payload: CreateBookPayload) {
-    createBook(payload: $payload) {
-      id
-    }
-  }
-`;
-
-export default function Home() {
+export default function CreateBook() {
   const router = useRouter();
-  const [createBook, { loading, error, data }] = useMutation(CREATE_BOOK);
+  const [createBook, { loading, error }] = useMutation(CREATE_BOOK_MUTATION);
 
   const handleSubmit = (payload) => {
     createBook({ variables: { payload } })

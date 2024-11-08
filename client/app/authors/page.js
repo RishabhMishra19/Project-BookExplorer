@@ -5,32 +5,15 @@ import { IconButton } from "../../components/IconButton";
 import { PaginationFooter } from "../../components/PaginationFooter";
 import Link from "next/link";
 import { WelcomeBox } from "../../components/WelcomeBox";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GenericError } from "../../components/GenericError";
 import { GenericLoader } from "../../components/GenericLoader";
 import { useState } from "react";
+import { GET_AUTHORS_QUERY } from "../../graphql/authorGqlStrs";
 
-const QUERY = gql`
-  query GetAuthors($pagination: Pagination, $filters: AuthorFilter) {
-    getAuthors(pagination: $pagination, filters: $filters) {
-      authors {
-        id
-        name
-        avg_rating
-        total_reviews
-        biography
-        born_date
-      }
-      totalCount
-      totalPages
-      currentPage
-    }
-  }
-`;
-
-export default function Home() {
+export default function AuthorsList() {
   const [filters, setFilters] = useState({});
-  const { data, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(GET_AUTHORS_QUERY, {
     variables: { filters, pagination: { skip: 0, limit: 10 } },
   });
 

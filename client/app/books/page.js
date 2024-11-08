@@ -5,36 +5,20 @@ import { IconButton } from "../../components/IconButton";
 import { PaginationFooter } from "../../components/PaginationFooter";
 import Link from "next/link";
 import { WelcomeBox } from "../../components/WelcomeBox";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GenericError } from "../../components/GenericError";
 import { GenericLoader } from "../../components/GenericLoader";
 import { useState } from "react";
+import { GET_BOOKS_QUERY } from "../../graphql/bookGqlStrs";
 
-const QUERY = gql`
-  query GetBooks($pagination: Pagination, $filters: BookFilter) {
-    getBooks(pagination: $pagination, filters: $filters) {
-      id
-      title
-      description
-      published_date
-      author {
-        id
-        name
-      }
-      avg_rating
-      total_reviews
-    }
-  }
-`;
-
-export default function Home() {
+export default function BookList() {
   const [filters, setFilters] = useState({});
 
-  const { data, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(GET_BOOKS_QUERY, {
     variables: { filters, pagination: { skip: 0, limit: 10 } },
   });
 
-  const books = data?.getBooks ?? [];
+  const books = data?.getBooks?.books ?? [];
 
   return (
     <div>

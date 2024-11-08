@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import { GenericLoader } from "./GenericLoader";
 import { GenericError } from "./GenericError";
-import { gql, useQuery } from "@apollo/client";
-
-const QUERY = gql`
-  query GetAuthors($pagination: Pagination, $filters: AuthorFilter) {
-    getAuthors(pagination: $pagination, filters: $filters) {
-      id
-      name
-    }
-  }
-`;
+import { useQuery } from "@apollo/client";
+import { GET_AUTHORS_QUERY } from "../graphql/authorGqlStrs";
 
 export const BookForm = ({
   isUpdate,
@@ -20,11 +12,11 @@ export const BookForm = ({
 }) => {
   const [formData, setFormData] = useState(initialData);
 
-  const { data, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(GET_AUTHORS_QUERY, {
     variables: { filters: {}, pagination: { skip: 0, limit: 100 } },
   });
 
-  const authors = data?.getAuthors ?? [];
+  const authors = data?.getAuthors?.authors ?? [];
 
   const handleChange = (e) => {
     const { name, value } = e.target;

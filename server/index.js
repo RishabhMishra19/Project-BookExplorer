@@ -19,17 +19,22 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  context: () => {
-    return {
-      authorLoader,
-      bookLoader,
-    };
-  },
 });
 
 const startServer = async () => {
   await server.start();
-  app.use(cors(), bodyParser.json(), expressMiddleware(server));
+  app.use(
+    cors(),
+    bodyParser.json(),
+    expressMiddleware(server, {
+      context: () => {
+        return {
+          authorLoader,
+          bookLoader,
+        };
+      },
+    })
+  );
   await db.sequelize.authenticate();
   await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000`);

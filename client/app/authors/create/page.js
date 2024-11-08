@@ -4,18 +4,13 @@ import { AuthorForm } from "../../../components/AuthorForm";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import { CREATE_AUTHOR_MUTATION } from "../../../graphql/authorGqlStrs";
 
-const CREATE_AUTHOR = gql`
-  mutation CreateAuthor($payload: CreateAuthorPayload) {
-    createAuthor(payload: $payload) {
-      id
-    }
-  }
-`;
-
-export default function Home() {
+export default function CreateAuthor() {
   const router = useRouter();
-  const [createAuthor, { loading, error, data }] = useMutation(CREATE_AUTHOR);
+  const [createAuthor, { loading, error }] = useMutation(
+    CREATE_AUTHOR_MUTATION
+  );
 
   const handleSubmit = (payload) => {
     createAuthor({ variables: { payload } })

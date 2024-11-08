@@ -1,8 +1,8 @@
-const { AuthorData } = require("../constants/AuthorData.js");
 const db = require("../models/index.js");
-const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
 const { DataTypes } = require("sequelize");
 const Author = require("../models/Author.js")(db.sequelize, DataTypes);
+const dayjs = require("dayjs");
+const Sequelize = require("sequelize");
 
 const getAuthors = async (filters, pagination) => {
   const skip = parseInt(pagination?.skip ?? 0);
@@ -13,12 +13,12 @@ const getAuthors = async (filters, pagination) => {
 
   if (filters?.name) {
     whereClause.name = {
-      [Sequelize.Op.like]: `%${filters.name}%`,
+      [Sequelize.Op.iLike]: `%${filters.name}%`,
     };
   }
 
   if (filters?.born_date) {
-    whereClause.born_date = filters.born_date;
+    whereClause.born_date = dayjs(filters.born_date).toISOString();
   }
 
   const result = await Author.findAndCountAll({
@@ -36,38 +36,53 @@ const getAuthors = async (filters, pagination) => {
   };
 };
 
-const getAuthorById = (id) => {
-  return AuthorData.find((sAuthor) => sAuthor.id === parseInt(id));
+const getAuthorById = async (id) => {
+  const result = await Author.findByPk(id);
+  return result;
 };
 
-const getAuthorsByIds = ({ ids }) => {
-  const intIds = ids.map((id) => {
-    return parseInt(id);
+const getAuthorsByIds = async ({ ids }) => {
+  const result = await Author.findAll({
+    where: {
+      id: {
+        [Sequelize.Op.in]: ids,
+      },
+    },
   });
-  return AuthorData.filter((sAuthor) => intIds.includes(sAuthor.id));
+  return result;
 };
 
-const createAuthor = (payload) => {
-  const newAuthor = {
-    id: AuthorData.length + 1,
-    ...payload,
-  };
-  AuthorData.push(newAuthor);
+const createAuthor = async (payload) => {
+  const newAuthor = await Author.create({
+    name: payload.name,
+    biography: payload.biography,
+    born_date: dayjs(payload.born_date).toISOString(),
+  });
+
   return newAuthor;
 };
 
-const updateAuthor = (id, payload) => {
-  const idx = AuthorData.findIndex((sAuthor) => sAuthor.id === parseInt(id));
-  AuthorData[idx] = {
-    ...AuthorData[idx],
-    ...payload,
-  };
-  return AuthorData[idx];
+const updateAuthor = async (id, payload) => {
+  try {
+    await Author.update(
+      {
+        name: payload.name,
+        biography: payload.biography,
+        born_date: dayjs(payload.born_date).toISOString(),
+      },
+      { where: { id } }
+    );
+    const updatedAuthor = await Author.findByPk(id);
+    return updatedAuthor;
+  } catch (error) {
+    console.log("updateAuthor error ", error);
+  }
 };
 
-const deleteAuthor = (id) => {
-  const idx = AuthorData.findIndex((sAuthor) => sAuthor.id === parseInt(id));
-  removeSingleElmInPlaceByIdx(AuthorData, idx);
+const deleteAuthor = async (id) => {
+  await Author.destroy({
+    where: { id },
+  });
   return id;
 };
 

@@ -1,48 +1,30 @@
 "use client";
 import Link from "next/link";
 import { BookForm } from "../../../../components/BookForm";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { use } from "react";
 import { useRouter } from "next/navigation";
 import { GenericLoader } from "../../../../components/GenericLoader";
 import { GenericError } from "../../../../components/GenericError";
 import toast, { Toaster } from "react-hot-toast";
+import dayjs from "dayjs";
+import {
+  GET_BOOK_BY_ID_QUERY,
+  UPDATE_BOOK_MUTATION,
+} from "../../../../graphql/bookGqlStrs";
 
-const QUERY = gql`
-  query getBookById($getBookById: ID!) {
-    getBookById(id: $getBookById) {
-      id
-      title
-      description
-      published_date
-      author {
-        id
-        name
-      }
-    }
-  }
-`;
-
-const UPDATE_BOOK = gql`
-  mutation UpdateBook($id: ID!, $payload: UpdateBookPayload) {
-    updateBook(id: $id, payload: $payload) {
-      id
-    }
-  }
-`;
-
-export default function Home({ params }) {
+export default function UpdateBook({ params }) {
   const unwrappedParams = use(params);
   const { bookId } = unwrappedParams;
   const router = useRouter();
 
-  const getBookMetaData = useQuery(QUERY, {
+  const getBookMetaData = useQuery(GET_BOOK_BY_ID_QUERY, {
     variables: { getBookById: bookId, skip: !bookId },
   });
 
   const book = getBookMetaData?.data?.getBookById ?? {};
 
-  const [updateBook, updateBookMetaData] = useMutation(UPDATE_BOOK);
+  const [updateBook, updateBookMetaData] = useMutation(UPDATE_BOOK_MUTATION);
 
   const handleSubmit = (payload) => {
     updateBook({
@@ -52,7 +34,7 @@ export default function Home({ params }) {
       },
     })
       .then(() => {
-        router.replace(`/books${book.id}`);
+        router.replace(`/books/${book.id}`);
         toast.success("Successfully Updated!");
       })
       .catch((e) => {
@@ -82,7 +64,9 @@ export default function Home({ params }) {
           initialData={{
             title: book.title,
             description: book.description,
-            published_date: book.published_date.split("T")[0],
+            published_date: dayjs(parseInt(book.published_date)).format(
+              "YYYY-MM-DD"
+            ),
             author_id: book.author?.id,
           }}
           isUpdate={true}

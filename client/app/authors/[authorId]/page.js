@@ -4,49 +4,24 @@ import Image from "next/image";
 import { StarRating } from "../../../components/StarRating";
 import { Modal } from "../../../components/Modal";
 import { use, useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GenericLoader } from "../../../components/GenericLoader";
 import { GenericError } from "../../../components/GenericError";
 import { ReviewForm } from "../../../components/ReviewForm";
 import toast, { Toaster } from "react-hot-toast";
+import dayjs from "dayjs";
+import {
+  CREATE_AUTHOR_REVIEW_MUTATION,
+  GET_AUTHOR_BY_ID_QUERY,
+} from "../../../graphql/authorGqlStrs";
 
-const QUERY = gql`
-  query getAuthorById($getAuthorById: ID!) {
-    getAuthorById(id: $getAuthorById) {
-      id
-      name
-      avg_rating
-      total_reviews
-      biography
-      born_date
-      reviews {
-        id
-        rating
-        review
-        created_at
-        reviewer_email
-      }
-    }
-  }
-`;
-
-const CREATE_AUTHOR_REVIEW = gql`
-  mutation CreateAuthorReview(
-    $authorId: ID!
-    $payload: CreateAuthorReviewPayload!
-  ) {
-    createAuthorReview(authorId: $authorId, payload: $payload) {
-      id
-    }
-  }
-`;
-
-export default function Home({ params }) {
+export default function AuthorDetails({ params }) {
   const unwrappedParams = use(params);
   const { authorId } = unwrappedParams;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [createAuthorReview, createAuthorReviewMetaData] =
-    useMutation(CREATE_AUTHOR_REVIEW);
+  const [createAuthorReview, createAuthorReviewMetaData] = useMutation(
+    CREATE_AUTHOR_REVIEW_MUTATION
+  );
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -56,7 +31,7 @@ export default function Home({ params }) {
     setIsModalOpen(false);
   };
 
-  const getAuthorMetaData = useQuery(QUERY, {
+  const getAuthorMetaData = useQuery(GET_AUTHOR_BY_ID_QUERY, {
     variables: { getAuthorById: authorId, skip: !authorId },
   });
 
@@ -101,7 +76,7 @@ export default function Home({ params }) {
           <div className="md:col-span-2">
             <p className="text-teal-600 mb-2">
               <strong>Birth Year:</strong>{" "}
-              {new Date(author.born_date).getFullYear()}
+              {dayjs(parseInt(author.born_date)).format("YYYY")}
             </p>
             <div className="text-teal-700 mb-4 flex items-center">
               <strong className="mr-2">Rating:</strong>

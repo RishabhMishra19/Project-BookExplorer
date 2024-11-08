@@ -1,44 +1,32 @@
 "use client";
 import Link from "next/link";
 import { AuthorForm } from "../../../../components/AuthorForm";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { use } from "react";
 import { useRouter } from "next/navigation";
 import { GenericLoader } from "../../../../components/GenericLoader";
 import { GenericError } from "../../../../components/GenericError";
 import toast, { Toaster } from "react-hot-toast";
+import dayjs from "dayjs";
+import {
+  GET_AUTHOR_BY_ID_QUERY,
+  UPDATE_AUTHOR_MUTATION,
+} from "../../../../graphql/authorGqlStrs";
 
-const QUERY = gql`
-  query getAuthorById($getAuthorById: ID!) {
-    getAuthorById(id: $getAuthorById) {
-      id
-      name
-      biography
-      born_date
-    }
-  }
-`;
-
-const UPDATE_AUTHOR = gql`
-  mutation UpdateAuthor($id: ID!, $payload: UpdateAuthorPayload) {
-    updateAuthor(id: $id, payload: $payload) {
-      id
-    }
-  }
-`;
-
-export default function Home({ params }) {
+export default function UpdateAuthor({ params }) {
   const unwrappedParams = use(params);
   const { authorId } = unwrappedParams;
   const router = useRouter();
 
-  const getAuthorMetaData = useQuery(QUERY, {
+  const getAuthorMetaData = useQuery(GET_AUTHOR_BY_ID_QUERY, {
     variables: { getAuthorById: authorId, skip: !authorId },
   });
 
   const author = getAuthorMetaData?.data?.getAuthorById ?? {};
 
-  const [updateAuthor, updateAuthorMetaData] = useMutation(UPDATE_AUTHOR);
+  const [updateAuthor, updateAuthorMetaData] = useMutation(
+    UPDATE_AUTHOR_MUTATION
+  );
 
   const handleSubmit = (payload) => {
     updateAuthor({
@@ -48,7 +36,7 @@ export default function Home({ params }) {
       },
     })
       .then(() => {
-        router.replace(`/authors${author.id}`);
+        router.replace(`/authors/${author.id}`);
         toast.success("Successfully Updated!");
       })
       .catch((e) => {
@@ -80,7 +68,7 @@ export default function Home({ params }) {
           initialData={{
             name: author.name,
             biography: author.biography,
-            born_date: author.born_date.split("T")[0],
+            born_date: dayjs(parseInt(author.born_date)).format("YYYY-MM-DD"),
           }}
           isUpdate={true}
           onSubmit={handleSubmit}

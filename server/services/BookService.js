@@ -1,8 +1,8 @@
-const { BookData } = require("../constants/BookData.js");
 const db = require("../models/index.js");
-const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
 const { DataTypes } = require("sequelize");
 const Book = require("../models/Book.js")(db.sequelize, DataTypes);
+const dayjs = require("dayjs");
+const Sequelize = require("sequelize");
 
 const getBooks = async (filters, pagination) => {
   const skip = parseInt(pagination?.skip ?? 0);
@@ -13,7 +13,7 @@ const getBooks = async (filters, pagination) => {
 
   if (filters?.title) {
     whereClause.title = {
-      [Sequelize.Op.like]: `%${filters.title}%`,
+      [Sequelize.Op.iLike]: `%${filters.title}%`,
     };
   }
 
@@ -24,7 +24,7 @@ const getBooks = async (filters, pagination) => {
   }
 
   if (filters?.published_date) {
-    whereClause.published_date = filters.published_date;
+    whereClause.published_date = dayjs(filters.published_date).toISOString();
   }
 
   const result = await Book.findAndCountAll({
@@ -42,42 +42,64 @@ const getBooks = async (filters, pagination) => {
   };
 };
 
-const getBookById = (id) => {
-  return BookData.find((sBook) => sBook.id === parseInt(id));
+const getBookById = async (id) => {
+  const result = await Book.findByPk(id);
+  return result;
 };
 
-const getBooksByAuthorId = (authorId) => {
-  return BookData.filter((sBook) => sBook.author_id === parseInt(authorId));
-};
-
-const getBooksByIds = ({ ids }) => {
-  const intIds = ids.map((id) => {
-    return parseInt(id);
+const getBooksByAuthorId = async (authorId) => {
+  const result = await Book.findAll({
+    where: {
+      author_id: authorId,
+    },
   });
-  return BookData.filter((sBook) => intIds.includes(sBook.id));
+  return result;
 };
 
-const createBook = (payload) => {
-  const newBook = {
-    id: BookData.length + 1,
-    ...payload,
-  };
-  BookData.push(newBook);
+const getBooksByIds = async ({ ids }) => {
+  const result = await Book.findAll({
+    where: {
+      id: {
+        [Sequelize.Op.in]: ids,
+      },
+    },
+  });
+  return result;
+};
+
+const createBook = async (payload) => {
+  const newBook = await Book.create({
+    title: payload.title,
+    description: payload.description,
+    published_date: dayjs(payload.published_date).toISOString(),
+    author_id: payload.author_id,
+  });
+  m;
   return newBook;
 };
 
-const updateBook = (id, payload) => {
-  const idx = BookData.findIndex((sBook) => sBook.id === parseInt(id));
-  BookData[idx] = {
-    ...BookData[idx],
-    ...payload,
-  };
-  return BookData[idx];
+const updateBook = async (id, payload) => {
+  try {
+    await Book.update(
+      {
+        title: payload.title,
+        description: payload.description,
+        published_date: dayjs(payload.published_date).toISOString(),
+        author_id: payload.author_id,
+      },
+      { where: { id } }
+    );
+    const updatedBook = await Book.findByPk(id);
+    return updatedBook;
+  } catch (error) {
+    console.log("updatedBook error ", error);
+  }
 };
 
-const deleteBook = (id) => {
-  const idx = BookData.findIndex((sBook) => sBook.id === parseInt(id));
-  removeSingleElmInPlaceByIdx(BookData, idx);
+const deleteBook = async (id) => {
+  await Book.destroy({
+    where: { id },
+  });
   return id;
 };
 

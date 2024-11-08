@@ -3,6 +3,7 @@ import { StarRating } from "./StarRating";
 import Link from "next/link";
 import Image from "next/image";
 import { CiEdit } from "react-icons/ci";
+import dayjs from "dayjs";
 
 export const AuthorCard = ({ author }) => {
   return (
@@ -22,7 +23,7 @@ export const AuthorCard = ({ author }) => {
           </Link>
         </div>
         <div className="text-xs font-bold">
-          [{new Date(author.born_date).getFullYear()}]
+          [{dayjs(parseInt(author.born_date)).format("YYYY")}]
         </div>
       </div>
       <StarRating

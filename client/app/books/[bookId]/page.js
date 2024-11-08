@@ -4,50 +4,23 @@ import Image from "next/image";
 import { StarRating } from "../../../components/StarRating";
 import { Modal } from "../../../components/Modal";
 import { use, useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GenericLoader } from "../../../components/GenericLoader";
 import { GenericError } from "../../../components/GenericError";
 import { ReviewForm } from "../../../components/ReviewForm";
 import toast, { Toaster } from "react-hot-toast";
+import {
+  CREATE_BOOK_REVIEW_MUTATION,
+  GET_BOOK_BY_ID_QUERY,
+} from "../../../graphql/bookGqlStrs";
 
-const QUERY = gql`
-  query getBookById($getBookById: ID!) {
-    getBookById(id: $getBookById) {
-      id
-      title
-      description
-      published_date
-      author {
-        id
-        name
-      }
-      avg_rating
-      total_reviews
-      reviews {
-        created_at
-        id
-        rating
-        review
-        reviewer_email
-      }
-    }
-  }
-`;
-
-const CREATE_BOOK_REVIEW = gql`
-  mutation CreateBookReview($bookId: ID!, $payload: CreateBookReviewPayload!) {
-    createBookReview(bookId: $bookId, payload: $payload) {
-      id
-    }
-  }
-`;
-
-export default function Home({ params }) {
+export default function BookDetails({ params }) {
   const unwrappedParams = use(params);
   const { bookId } = unwrappedParams;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [createBookReview, createBookReviewMetaData] =
-    useMutation(CREATE_BOOK_REVIEW);
+  const [createBookReview, createBookReviewMetaData] = useMutation(
+    CREATE_BOOK_REVIEW_MUTATION
+  );
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -57,7 +30,7 @@ export default function Home({ params }) {
     setIsModalOpen(false);
   };
 
-  const getBookMetaData = useQuery(QUERY, {
+  const getBookMetaData = useQuery(GET_BOOK_BY_ID_QUERY, {
     variables: { getBookById: bookId, skip: !bookId },
   });
 
@@ -82,8 +55,8 @@ export default function Home({ params }) {
     return <GenericLoader />;
   }
 
-  if (getBookMetaData.error) {
-    return <GenericError message={error.cause.message} />;
+  if (getBookMetaData?.error) {
+    return <GenericError message={error?.cause?.message} />;
   }
 
   return (
