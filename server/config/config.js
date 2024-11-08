@@ -2,7 +2,11 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    url: process.env.POSTGRES_URL_NO_SSL,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DATABASE,
+    host: process.env.POSTGRES_HOST,
+    port: process.env.DB_PORT || 5432, // Defaulting to 5432 if DB_PORT is not set
     dialect: "postgres",
     dialectOptions: {
       ssl: {
@@ -12,7 +16,11 @@ module.exports = {
     },
   },
   test: {
-    url: process.env.POSTGRES_URL_NO_SSL,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DATABASE,
+    host: process.env.POSTGRES_HOST,
+    port: process.env.DB_PORT || 5432,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
@@ -22,7 +30,11 @@ module.exports = {
     },
   },
   production: {
-    url: process.env.POSTGRES_URL_NO_SSL,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DATABASE,
+    host: process.env.POSTGRES_HOST,
+    port: process.env.DB_PORT || 5432,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
