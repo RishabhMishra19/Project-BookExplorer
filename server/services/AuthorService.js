@@ -5,19 +5,19 @@ const { DataTypes } = require("sequelize");
 const Author = require("../models/Author.js")(db.sequelize, DataTypes);
 
 const getAuthors = async (filters, pagination) => {
-  const skip = parseInt(pagination.skip ?? 0);
-  const limit = parseInt(pagination.limit ?? 0);
+  const skip = parseInt(pagination?.skip ?? 0);
+  const limit = parseInt(pagination?.limit ?? 0);
   const offset = skip * limit;
 
   const whereClause = {};
 
-  if (filters.name) {
+  if (filters?.name) {
     whereClause.name = {
       [Sequelize.Op.like]: `%${filters.name}%`,
     };
   }
 
-  if (filters.born_date) {
+  if (filters?.born_date) {
     whereClause.born_date = filters.born_date;
   }
 

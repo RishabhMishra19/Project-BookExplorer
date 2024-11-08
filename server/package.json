@@ -14,11 +14,10 @@
   "author": "Rishabh Mishra",
   "license": "ISC",
   "dependencies": {
-    "@sequelize/core": "^7.0.0-alpha.43",
-    "@sequelize/postgres": "^7.0.0-alpha.43",
-    "apollo-server": "^3.13.0",
+    "@apollo/server": "^4.11.2",
     "cors": "^2.8.5",
     "dataloader": "^2.2.2",
+    "express": "^4.21.1",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5"
   },
