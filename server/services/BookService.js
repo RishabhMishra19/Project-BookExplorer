@@ -1,39 +1,42 @@
-const { AuthorData } = require("../constants/AuthorData.js");
 const { BookData } = require("../constants/BookData.js");
-const {
-  areDatesEqual,
-  removeSingleElmInPlaceByIdx,
-} = require("../utils/genericUtils.js");
+const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
 
-const getBooks = (filters, pagination) => {
-  const skip = parseInt(pagination.skip ?? 0);
-  const limit = parseInt(pagination.limit ?? 0);
-  const filteredData = BookData.filter((sBook) => {
-    if (filters["title"]) {
-      if (!sBook.title.toLowerCase().includes(filters["title"].toLowerCase())) {
-        return false;
-      }
-    }
-    if (filters["author"]) {
-      const author = AuthorData.find(
-        (sAuthor) => sAuthor.id === sBook.author_id
-      );
-      if (
-        !author?.name.toLowerCase().includes(filters["author"].toLowerCase())
-      ) {
-        return false;
-      }
-    }
-    if (filters["published_date"]) {
-      if (!areDatesEqual(filters["published_date"], sBook.published_date)) {
-        return false;
-      }
-    }
-    return true;
+const getBooks = async (filters, pagination) => {
+  const skip = parseInt(pagination?.skip ?? 0);
+  const limit = parseInt(pagination?.limit ?? 0);
+  const offset = skip * limit;
+
+  const whereClause = {};
+
+  if (filters?.title) {
+    whereClause.title = {
+      [Sequelize.Op.like]: `%${filters.title}%`,
+    };
+  }
+
+  if (filters?.author) {
+    whereClause.author_id = {
+      [Sequelize.Op.eq]: `%${filters.author}%`,
+    };
+  }
+
+  if (filters?.published_date) {
+    whereClause.published_date = filters.published_date;
+  }
+
+  const result = await Author.findAndCountAll({
+    where: whereClause,
+    limit,
+    offset,
+    order: [["title", "ASC"]],
   });
 
-  const paginatedData = filteredData.slice(skip * limit, (skip + 1) * limit);
-  return paginatedData;
+  return {
+    authors: result.rows,
+    totalCount: result.count,
+    totalPages: Math.ceil((result.count + limit - 1) / limit),
+    currentPage: skip + 1,
+  };
 };
 
 const getBookById = (id) => {
