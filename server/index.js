@@ -7,35 +7,34 @@ const express = require("express");
 const cors = require("cors");
 const { expressMiddleware } = require("@apollo/server/express4");
 const { ApolloServer } = require("@apollo/server");
+const {
+  ApolloServerPluginDrainHttpServer,
+} = require("@apollo/server/plugin/drainHttpServer");
+const http = require("http");
+const bodyParser = require("body-parser");
 
 const app = express();
+const httpServer = http.createServer(app);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  context: () => {
+    return {
+      authorLoader,
+      bookLoader,
+    };
+  },
+});
 
-const createExpressApp = async () => {
-  try {
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-      context: () => {
-        return {
-          authorLoader,
-          bookLoader,
-        };
-      },
-    });
-    await server.start();
-    console.log("Appollo server started successfully");
-    await db.sequelize.authenticate();
-    console.log("Database authenticated successfully");
-    app.use("/graphql", cors(), express.json(), expressMiddleware(server));
-    app.listen(4000, () => {
-      console.log("Backend is listening on port: 4000");
-    });
-    return app;
-  } catch (error) {
-    console.log(`Some error occured: ${error}`);
-  }
+const startServer = async () => {
+  await server.start();
+  app.use(cors(), bodyParser.json(), expressMiddleware(server));
+  await db.sequelize.authenticate();
+  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  console.log(`🚀 Server ready at http://localhost:4000`);
 };
 
-createExpressApp();
+startServer();
 
 module.exports = app;
