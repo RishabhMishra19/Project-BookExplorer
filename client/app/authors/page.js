@@ -60,7 +60,7 @@ export default function AuthorsList() {
               <AuthorFilters filters={filters} setFilters={setFilters} />
             </div>
             <div className="w-10/12">
-              <div className="flex flex-wrap justify-between">
+              <div className="flex flex-wrap gap-4">
                 {authors.map((author) => (
                   <AuthorCard key={author.id} author={author} />
                 ))}

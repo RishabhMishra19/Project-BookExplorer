@@ -60,11 +60,9 @@ export default function BookList() {
               <BookFilters filters={filters} setFilters={setFilters} />
             </div>
             <div className="w-10/12">
-              <div className="flex flex-wrap justify-left">
+              <div className="flex flex-wrap gap-4">
                 {books.map((book) => (
-                  <div key={book.id} className="mr-3">
-                    <BookCard book={book} />
-                  </div>
+                  <BookCard key={book.id} book={book} />
                 ))}
               </div>
               <PaginationFooter
