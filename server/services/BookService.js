@@ -1,5 +1,6 @@
 const { BookData } = require("../constants/BookData.js");
 const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
+const Book = require("../models/Book.js")(db.sequelize, DataTypes);
 
 const getBooks = async (filters, pagination) => {
   const skip = parseInt(pagination?.skip ?? 0);
@@ -24,7 +25,7 @@ const getBooks = async (filters, pagination) => {
     whereClause.published_date = filters.published_date;
   }
 
-  const result = await Author.findAndCountAll({
+  const result = await Book.findAndCountAll({
     where: whereClause,
     limit,
     offset,
