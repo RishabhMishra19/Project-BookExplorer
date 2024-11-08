@@ -1,9 +1,12 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { config } from "dotenv";
+config();
 
 export const createApolloClient = () => {
-  console.log("bacend ur", `${process.env.BACKEND_BASE_URL}/graphql`);
+  const backendUrl = `https://bookexplorerbackend.onrender.com/graphql`;
+  console.log("bacend ur", backendUrl);
   return new ApolloClient({
-    uri: `${process.env.BACKEND_BASE_URL}/graphql`,
+    uri: backendUrl,
     cache: new InMemoryCache(),
   });
 };
