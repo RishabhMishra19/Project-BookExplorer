@@ -1,10 +1,8 @@
 require("dotenv").config();
 
-const postgressUrl = process.env.POSTGRES_URL.split("?")[0];
-
 module.exports = {
   development: {
-    url: postgressUrl,
+    url: process.env.POSTGRES_URL,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
@@ -14,7 +12,7 @@ module.exports = {
     },
   },
   test: {
-    url: postgressUrl,
+    url: process.env.POSTGRES_URL,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
@@ -24,7 +22,7 @@ module.exports = {
     },
   },
   production: {
-    url: postgressUrl,
+    url: process.env.POSTGRES_URL,
     dialect: "postgres",
     dialectOptions: {
       ssl: {
