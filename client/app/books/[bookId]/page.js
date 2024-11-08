@@ -14,6 +14,7 @@ import {
   GET_BOOK_BY_ID_QUERY,
 } from "../../../graphql/bookGqlStrs";
 import { ReviewDetails } from "../../../components/ReviewDetails";
+import dayjs from "dayjs";
 
 export default function BookDetails({ params }) {
   const unwrappedParams = use(params);
@@ -79,7 +80,8 @@ export default function BookDetails({ params }) {
               <strong>Author:</strong> {book.author.name}
             </p>
             <p className="text-teal-600 mb-2">
-              <strong>Publication Date:</strong> {book.published_date}
+              <strong>Publication Date:</strong>{" "}
+              {dayjs(parseInt(book.published_date)).format("YYYY-MM-DD")}
             </p>
             <div className="text-teal-700 mb-4 flex items-center">
               <strong className="mr-2">Rating:</strong>

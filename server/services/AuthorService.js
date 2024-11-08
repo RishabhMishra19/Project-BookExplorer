@@ -17,8 +17,13 @@ const getAuthors = async (filters, pagination) => {
     };
   }
 
-  if (filters?.born_date) {
-    whereClause.born_date = dayjs(filters.born_date).toISOString();
+  if (filters?.born_year) {
+    const year = parseInt(filters?.born_year);
+    // whereClause.born_date = dayjs(filters.born_date).toISOString();
+    whereClause.born_date = {
+      [Sequelize.Op.gte]: new Date(year, 0, 1),
+      [Sequelize.Op.lte]: new Date(year, 11, 31),
+    };
   }
 
   const result = await Author.findAndCountAll({

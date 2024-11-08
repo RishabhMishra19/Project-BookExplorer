@@ -42,7 +42,7 @@ const typeDefs = `#graphql
   }
   input AuthorFilter {
     name: String
-    born_date: String
+    born_year: String
   }
   input Pagination {
     skip: Int

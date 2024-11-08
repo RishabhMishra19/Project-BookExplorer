@@ -11,11 +11,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
-    "@sequelize/core": "^7.0.0-alpha.43",
-    "@sequelize/postgres": "^7.0.0-alpha.43",
     "dayjs": "^1.11.13",
-    "graphql": "^16.9.0",
-    "pg": "^8.13.1",
+    "dotenv": "^16.4.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.4.1",

@@ -9,8 +9,8 @@ export const AuthorCard = ({ author }) => {
   return (
     <div className="w-80 rounded overflow-hidden shadow-lg bg-white px-5 py-4 mb-8">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-1">
-          <Link href={`/authors/${author.id}`}>
+        <div className="flex items-center gap-1 w-[70%]">
+          <Link href={`/authors/${author.id}`} className="w-full">
             <h2 className="text-xl font-bold text-black truncate mr-1 hover:text-blue-500 cursor-pointer">
               {author.name}
             </h2>

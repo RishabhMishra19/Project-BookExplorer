@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { GenericLoader } from "./GenericLoader";
+import { GenericError } from "./GenericError";
+import { GET_AUTHORS_QUERY } from "../graphql/authorGqlStrs";
+import { useQuery } from "@apollo/client";
 
 export const BookFilters = ({ filters, setFilters }) => {
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
+
+  const { data, loading, error } = useQuery(GET_AUTHORS_QUERY, {
+    variables: { filters: {}, pagination: { skip: 0, limit: 100 } },
+  });
+
+  const authors = data?.getAuthors?.authors ?? [];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +25,16 @@ export const BookFilters = ({ filters, setFilters }) => {
     return () => clearTimeout(timeoutId);
   }, [debouncedFilters]);
 
+  if (loading) {
+    return <GenericLoader />;
+  }
+
+  if (error) {
+    return (
+      <GenericError message={error.cause?.message ?? "Something went wrong"} />
+    );
+  }
+
   return (
     <div className="space-y-4 w-full">
       <div>
@@ -24,15 +44,23 @@ export const BookFilters = ({ filters, setFilters }) => {
         >
           Author
         </label>
-        <input
-          type="text"
+        <select
           id="author"
           name="author"
-          placeholder="Search by author"
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-0"
+          required
+          className="w-full px-3 py-2 border border-teal-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
           value={debouncedFilters.author ?? ""}
           onChange={handleChange}
-        />
+        >
+          <option key="" value="">
+            Select an author
+          </option>
+          {authors.map((author) => (
+            <option key={author.id} value={author.id}>
+              {author.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>

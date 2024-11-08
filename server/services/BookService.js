@@ -18,13 +18,21 @@ const getBooks = async (filters, pagination) => {
   }
 
   if (filters?.author) {
-    whereClause.author_id = {
-      [Sequelize.Op.eq]: `%${filters.author}%`,
-    };
+    whereClause.author_id = filters.author;
   }
 
   if (filters?.published_date) {
     whereClause.published_date = dayjs(filters.published_date).toISOString();
+
+    const startOfDay = dayjs(filters.published_date).startOf("day");
+    const endOfDay = dayjs(filters.published_date).endOf("day");
+
+    if (startOfDay.isValid() && endOfDay.isValid()) {
+      whereClause.published_date = {
+        [Sequelize.Op.gte]: startOfDay.toDate(),
+        [Sequelize.Op.lte]: endOfDay.toDate(),
+      };
+    }
   }
 
   const result = await Book.findAndCountAll({

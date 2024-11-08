@@ -49,10 +49,10 @@ export const AuthorFilters = ({ filters, setFilters }) => {
         </label>
         <select
           type="date"
-          id="born_date"
-          name="born_date"
+          id="born_year"
+          name="born_year"
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-0"
-          value={debouncedFilters.born_date ?? ""}
+          value={debouncedFilters.born_year ?? ""}
           onChange={handleChange}
         >
           <option value="">Select Year</option>

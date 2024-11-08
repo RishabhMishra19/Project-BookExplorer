@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { AuthorForm } from "../../../components/AuthorForm";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { CREATE_AUTHOR_MUTATION } from "../../../graphql/authorGqlStrs";

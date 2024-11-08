@@ -3,13 +3,14 @@ import { StarRating } from "./StarRating";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import Image from "next/image";
+import dayjs from "dayjs";
 
 export const BookCard = ({ book }) => {
   return (
     <div className="w-80 rounded overflow-hidden shadow-lg bg-white px-5 py-4 mb-8">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-1">
-          <Link href={`/books/${book.id}`}>
+        <div className="flex items-center gap-1 w-[65%]">
+          <Link href={`/books/${book.id}`} className="w-full">
             <h2 className="text-xl font-bold text-black truncate mr-1 hover:text-blue-500 cursor-pointer">
               {book.title}
             </h2>
@@ -21,7 +22,10 @@ export const BookCard = ({ book }) => {
             />
           </Link>
         </div>
-        <div className="text-xs font-bold">[{1999}]</div>
+        <div className="text-xs font-bold">
+          {" "}
+          [{dayjs(parseInt(book.published_date)).format("YYYY-MM-DD")}]
+        </div>
       </div>
       <p className="text-gray-700 text-gray-500 text-xs mb-1">
         by{" "}
