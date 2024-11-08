@@ -35,7 +35,7 @@ const getBooks = async (filters, pagination) => {
   });
 
   return {
-    authors: result.rows,
+    books: result.rows,
     totalCount: result.count,
     totalPages: Math.ceil((result.count + limit - 1) / limit),
     currentPage: skip + 1,

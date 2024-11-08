@@ -55,8 +55,14 @@ const typeDefs = `#graphql
     totalPages: Int!
     currentPage: Int!
   }
+  type GetBooksResponse {
+    books: [Book!]
+    totalCount: Int!
+    totalPages: Int!
+    currentPage: Int!
+  }
   type Query {
-    getBooks(filters: BookFilter, pagination: Pagination): [Book!]
+    getBooks(filters: BookFilter, pagination: Pagination): GetBooksResponse
     getBookById(id: ID!): Book!
     getAuthors(
       filters: AuthorFilter
