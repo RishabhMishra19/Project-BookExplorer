@@ -8,16 +8,37 @@ import { WelcomeBox } from "../../components/WelcomeBox";
 import { useQuery } from "@apollo/client";
 import { GenericError } from "../../components/GenericError";
 import { GenericLoader } from "../../components/GenericLoader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GET_AUTHORS_QUERY } from "../../graphql/authorGqlStrs";
 
 export default function AuthorsList() {
   const [filters, setFilters] = useState({});
-  const { data, loading, error } = useQuery(GET_AUTHORS_QUERY, {
-    variables: { filters, pagination: { skip: 0, limit: 10 } },
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 0,
+    totalCount: 0,
   });
 
-  const authors = data?.getAuthors?.authors ?? [];
+  const { data, loading, error } = useQuery(GET_AUTHORS_QUERY, {
+    variables: {
+      filters,
+      pagination: { skip: pagination.currentPage - 1, limit: 10 },
+    },
+  });
+
+  const authorResponse = data?.getAuthors ?? {};
+
+  const authors = authorResponse?.authors ?? [];
+
+  useEffect(() => {
+    if (Object.keys(authorResponse).length > 0) {
+      setPagination({
+        currentPage: authorResponse.currentPage,
+        totalPages: authorResponse.totalPages,
+        totalCount: authorResponse.totalCount,
+      });
+    }
+  }, [authorResponse]);
 
   return (
     <div>
@@ -45,10 +66,20 @@ export default function AuthorsList() {
                 ))}
               </div>
               <PaginationFooter
-                curPage={1}
-                totalPages={5}
-                onPrev={() => null}
-                onNext={() => null}
+                curPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                onPrev={() =>
+                  setPagination((pval) => ({
+                    ...pval,
+                    currentPage: pval.currentPage - 1,
+                  }))
+                }
+                onNext={() =>
+                  setPagination((pval) => ({
+                    ...pval,
+                    currentPage: pval.currentPage + 1,
+                  }))
+                }
               />
             </div>
           </div>

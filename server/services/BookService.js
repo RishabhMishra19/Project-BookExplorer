@@ -74,7 +74,6 @@ const createBook = async (payload) => {
     published_date: dayjs(payload.published_date).toISOString(),
     author_id: payload.author_id,
   });
-  m;
   return newBook;
 };
 
