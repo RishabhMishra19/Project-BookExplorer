@@ -1,5 +1,7 @@
 const { BookData } = require("../constants/BookData.js");
+const db = require("../models/index.js");
 const { removeSingleElmInPlaceByIdx } = require("../utils/genericUtils.js");
+const { DataTypes } = require("sequelize");
 const Book = require("../models/Book.js")(db.sequelize, DataTypes);
 
 const getBooks = async (filters, pagination) => {
