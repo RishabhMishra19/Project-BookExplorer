@@ -68,17 +68,18 @@ const resolvers = {
     author: (parent, _, ctx) => {
       return ctx.authorLoader.load(parent.author_id);
     },
-    reviews: (parent) => {
-      return getBookReviewsByBookId(parent.id);
+    reviews: async (parent) => {
+      return await getBookReviewsByBookId(parent.id);
     },
-    avg_rating: (parent) => {
-      const reviews = getBookReviewsByBookId(parent.id);
+    avg_rating: async (parent) => {
+      const reviews = await getBookReviewsByBookId(parent.id);
       const totalRating = reviews.reduce((prev, cur) => prev + cur.rating, 0);
       const totalReviews = reviews.length;
       return roundToClosestValue(totalRating / totalReviews);
     },
-    total_reviews: (parent) => {
-      return getBookReviewsByBookId(parent.id).length;
+    total_reviews: async (parent) => {
+      const reviews = await getBookReviewsByBookId(parent.id);
+      return reviews.length;
     },
   },
   BookReview: {
@@ -90,17 +91,18 @@ const resolvers = {
     books: (parent) => {
       return getBooksByAuthorId(parent.id);
     },
-    reviews: (parent) => {
-      return getAuthorReviewsByAuthorId(parent.id);
+    reviews: async (parent) => {
+      return await getAuthorReviewsByAuthorId(parent.id);
     },
-    avg_rating: (parent) => {
-      const reviews = getAuthorReviewsByAuthorId(parent.id);
+    avg_rating: async (parent) => {
+      const reviews = await getAuthorReviewsByAuthorId(parent.id);
       const totalRating = reviews.reduce((prev, cur) => prev + cur.rating, 0);
       const totalReviews = reviews.length;
       return roundToClosestValue(totalRating / totalReviews);
     },
-    total_reviews: (parent) => {
-      return getAuthorReviewsByAuthorId(parent.id).length;
+    total_reviews: async (parent) => {
+      const reviews = await getAuthorReviewsByAuthorId(parent.id);
+      return reviews.length;
     },
   },
   AuthorReview: {

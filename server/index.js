@@ -12,6 +12,8 @@ const {
 } = require("@apollo/server/plugin/drainHttpServer");
 const http = require("http");
 const bodyParser = require("body-parser");
+require("dotenv").config();
+const mongoose = require("mongoose");
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -35,6 +37,7 @@ const startServer = async () => {
       },
     })
   );
+  await mongoose.connect(process.env.MONGO_URI);
   await db.sequelize.authenticate();
   await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000`);

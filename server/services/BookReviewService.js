@@ -1,20 +1,14 @@
-const { BookReviewData } = require("../constants/BookReviewData.js");
+const { BookReview } = require("../mongoDbModels/BookReview.js");
 
-const getBookReviewsByBookId = (bookId) => {
-  return BookReviewData.filter(
-    (sReview) => parseInt(bookId) === sReview.book_id
-  );
+const getBookReviewsByBookId = async (bookId) => {
+  const result = await BookReview.find({ book_id: bookId });
+  return result;
 };
 
-const createBookReview = (bookId, payload) => {
-  const newBookReview = {
-    id: BookReviewData.length + 1,
-    created_at: new Date().toISOString(),
-    book_id: parseInt(bookId),
-    ...payload,
-  };
-  BookReviewData.push(newBookReview);
-  return newBookReview;
+const createBookReview = async (bookId, payload) => {
+  const newReview = new BookReview({ ...payload, book_id: bookId });
+  await newReview.save();
+  return newReview;
 };
 
 module.exports = { getBookReviewsByBookId, createBookReview };
