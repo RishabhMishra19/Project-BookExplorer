@@ -1,4 +1,4 @@
-const { BookReview } = require("../mongoDbModels/BookReview.js");
+const { BookReview } = require("../mongoDbModels");
 
 const getBookReviewsByBookId = async (bookId) => {
   const result = await BookReview.find({ book_id: bookId });

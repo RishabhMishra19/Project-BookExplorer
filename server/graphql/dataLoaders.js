@@ -1,9 +1,9 @@
 const DataLoader = require("dataloader");
-const { getAuthorsByIds } = require("../services/AuthorService.js");
-const { getBooksByIds } = require("../services/BookService.js");
+const authorService = require("../services/AuthorService.js");
+const bookService = require("../services/BookService.js");
 
 const authorLoader = new DataLoader(async (ids) => {
-  const authors = await getAuthorsByIds({ ids });
+  const authors = await authorService.getAuthorsByIds({ ids });
   const authorMap = {};
   authors.forEach((author) => {
     authorMap[author.id] = author;
@@ -12,7 +12,7 @@ const authorLoader = new DataLoader(async (ids) => {
 });
 
 const bookLoader = new DataLoader(async (ids) => {
-  const books = await getBooksByIds({ ids });
+  const books = await bookService.getBooksByIds({ ids });
   const bookMap = {};
   books.forEach((book) => {
     bookMap[book.id] = book;

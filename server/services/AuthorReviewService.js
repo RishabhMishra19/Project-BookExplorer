@@ -1,4 +1,4 @@
-const { AuthorReview } = require("../mongoDbModels/AuthorReview.js");
+const { AuthorReview } = require("../mongoDbModels");
 
 const getAuthorReviewsByAuthorId = async (authorId) => {
   const result = await AuthorReview.find({ author_id: authorId });

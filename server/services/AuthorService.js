@@ -1,8 +1,5 @@
-const db = require("../models/index.js");
-const { DataTypes } = require("sequelize");
-const Author = require("../models/Author.js")(db.sequelize, DataTypes);
+const { Author, Sequelize } = require("../models/index.js");
 const dayjs = require("dayjs");
-const Sequelize = require("sequelize");
 
 const getAuthors = async (filters, pagination) => {
   const skip = parseInt(pagination?.skip ?? 0);
@@ -19,7 +16,6 @@ const getAuthors = async (filters, pagination) => {
 
   if (filters?.born_year) {
     const year = parseInt(filters?.born_year);
-    // whereClause.born_date = dayjs(filters.born_date).toISOString();
     whereClause.born_date = {
       [Sequelize.Op.gte]: new Date(year, 0, 1),
       [Sequelize.Op.lte]: new Date(year, 11, 31),

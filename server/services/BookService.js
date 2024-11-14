@@ -1,8 +1,5 @@
-const db = require("../models/index.js");
-const { DataTypes } = require("sequelize");
-const Book = require("../models/Book.js")(db.sequelize, DataTypes);
+const { Book, Sequelize } = require("../models/index.js");
 const dayjs = require("dayjs");
-const Sequelize = require("sequelize");
 
 const getBooks = async (filters, pagination) => {
   const skip = parseInt(pagination?.skip ?? 0);
