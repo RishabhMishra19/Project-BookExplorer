@@ -12,15 +12,14 @@ export default function CreateAuthor() {
     CREATE_AUTHOR_MUTATION
   );
 
-  const handleSubmit = (payload) => {
-    createAuthor({ variables: { payload } })
-      .then((res) => {
-        router.replace(`/authors/${res.data.createAuthor.id}`);
-        toast.success("Successfully Created!");
-      })
-      .catch((e) => {
-        toast.error(error?.cause?.message ?? "Something went wrong");
-      });
+  const handleSubmit = async (payload) => {
+    try {
+      const res = await createAuthor({ variables: { payload } })
+      router.replace(`/authors/${res.data.createAuthor.id}`);
+      toast.success("Successfully Created!");
+    } catch (e) {
+      toast.error(error?.cause?.message ?? "Something went wrong");
+    }
   };
 
   return (

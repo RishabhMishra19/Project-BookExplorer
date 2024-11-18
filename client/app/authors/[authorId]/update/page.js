@@ -28,22 +28,21 @@ export default function UpdateAuthor({ params }) {
     UPDATE_AUTHOR_MUTATION
   );
 
-  const handleSubmit = (payload) => {
-    updateAuthor({
-      variables: {
-        payload,
-        id: author.id,
-      },
-    })
-      .then(() => {
-        router.replace(`/authors/${author.id}`);
-        toast.success("Successfully Updated!");
-      })
-      .catch((e) => {
-        toast.error(
-          updateAuthorMetaData?.error?.cause?.message ?? "Something went wrong"
-        );
+  const handleSubmit = async (payload) => {
+    try{
+      await updateAuthor({
+        variables: {
+          payload,
+          id: author.id,
+        },
       });
+      router.replace(`/authors/${author.id}`);
+      toast.success("Successfully Updated!");
+    }catch(e){
+      toast.error(
+        updateAuthorMetaData?.error?.cause?.message ?? "Something went wrong"
+      );
+    }
   };
 
   if (getAuthorMetaData.loading) {

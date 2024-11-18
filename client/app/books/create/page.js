@@ -10,15 +10,14 @@ export default function CreateBook() {
   const router = useRouter();
   const [createBook, { loading, error }] = useMutation(CREATE_BOOK_MUTATION);
 
-  const handleSubmit = (payload) => {
-    createBook({ variables: { payload } })
-      .then((res) => {
-        router.replace(`/books/${res.data.createBook.id}`);
-        toast.success("Successfully Created!");
-      })
-      .catch((e) => {
-        toast.error(error?.cause?.message ?? "Something went wrong");
-      });
+  const handleSubmit = async (payload) => {
+    try {
+      const res = await createBook({ variables: { payload } })
+      router.replace(`/books/${res.data.createBook.id}`);
+      toast.success("Successfully Created!");
+    } catch (e) {
+      toast.error(error?.cause?.message ?? "Something went wrong");
+    };
   };
 
   return (

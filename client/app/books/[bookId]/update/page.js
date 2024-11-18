@@ -26,22 +26,21 @@ export default function UpdateBook({ params }) {
 
   const [updateBook, updateBookMetaData] = useMutation(UPDATE_BOOK_MUTATION);
 
-  const handleSubmit = (payload) => {
-    updateBook({
-      variables: {
-        payload,
-        id: book.id,
-      },
-    })
-      .then(() => {
-        router.replace(`/books/${book.id}`);
-        toast.success("Successfully Updated!");
-      })
-      .catch((e) => {
-        toast.error(
-          updateBookMetaData?.error?.cause?.message ?? "Something went wrong"
-        );
+  const handleSubmit = async (payload) => {
+    try {
+      await updateBook({
+        variables: {
+          payload,
+          id: book.id,
+        },
       });
+      router.replace(`/books/${book.id}`);
+      toast.success("Successfully Updated!");
+    } catch (e) {
+      toast.error(
+        updateBookMetaData?.error?.cause?.message ?? "Something went wrong"
+      );
+    }
   };
 
   if (getBookMetaData.loading) {
