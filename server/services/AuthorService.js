@@ -76,7 +76,7 @@ const updateAuthor = async (id, payload) => {
     const updatedAuthor = await Author.findByPk(id);
     return updatedAuthor;
   } catch (error) {
-    console.log("updateAuthor error ", error);
+    throw new Error(error);
   }
 };
 

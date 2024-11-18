@@ -96,7 +96,7 @@ const updateBook = async (id, payload) => {
     const updatedBook = await Book.findByPk(id);
     return updatedBook;
   } catch (error) {
-    console.log("updatedBook error ", error);
+    throw new Error(error);
   }
 };
 
