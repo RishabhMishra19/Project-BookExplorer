@@ -1,4 +1,4 @@
-const { resolvers } = require("./graphql/resolvers.js");
+const { resolvers } = require("./graphql/resolvers");
 const { typeDefs } = require('./graphql/typedefs');
 
 const { authorLoader, bookLoader } = require("./graphql/dataLoaders.js");
