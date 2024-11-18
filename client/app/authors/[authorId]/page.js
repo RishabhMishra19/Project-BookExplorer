@@ -15,6 +15,7 @@ import {
   GET_AUTHOR_BY_ID_QUERY,
 } from "../../../graphql/authorGqlStrs";
 import { ReviewDetails } from "../../../components/ReviewDetails";
+import { parseApolloError } from "../../../utils/genericUtils";
 
 export default function AuthorDetails({ params }) {
   const unwrappedParams = use(params);
@@ -47,8 +48,7 @@ export default function AuthorDetails({ params }) {
       })
       .catch((e) => {
         toast.error(
-          createAuthorReviewMetaData.error?.cause?.message ??
-            "Something went wrong"
+          parseApolloError(createAuthorReviewMetaData.error)
         );
       });
   };
@@ -58,7 +58,7 @@ export default function AuthorDetails({ params }) {
   }
 
   if (getAuthorMetaData.error) {
-    return <GenericError message={error?.cause?.message} />;
+    return <GenericError message={parseApolloError(getAuthorMetaData.error)} />;
   }
 
   return (

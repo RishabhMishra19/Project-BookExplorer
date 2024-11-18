@@ -12,6 +12,7 @@ import {
   GET_AUTHOR_BY_ID_QUERY,
   UPDATE_AUTHOR_MUTATION,
 } from "../../../../graphql/authorGqlStrs";
+import { parseApolloError } from "../../../../utils/genericUtils";
 
 export default function UpdateAuthor({ params }) {
   const unwrappedParams = use(params);
@@ -29,7 +30,7 @@ export default function UpdateAuthor({ params }) {
   );
 
   const handleSubmit = async (payload) => {
-    try{
+    try {
       await updateAuthor({
         variables: {
           payload,
@@ -38,9 +39,9 @@ export default function UpdateAuthor({ params }) {
       });
       router.replace(`/authors/${author.id}`);
       toast.success("Successfully Updated!");
-    }catch(e){
+    } catch (e) {
       toast.error(
-        updateAuthorMetaData?.error?.cause?.message ?? "Something went wrong"
+        parseApolloError(updateAuthorMetaData.error)
       );
     }
   };
@@ -53,7 +54,7 @@ export default function UpdateAuthor({ params }) {
     return (
       <GenericError
         message={
-          getAuthorMetaData.error.cause?.message ?? "Something went wrong"
+          parseApolloError(getAuthorMetaData.error)
         }
       />
     );

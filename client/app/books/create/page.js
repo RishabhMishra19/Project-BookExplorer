@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { CREATE_BOOK_MUTATION } from "../../../graphql/bookGqlStrs";
+import { parseApolloError } from "../../../utils/genericUtils";
 
 export default function CreateBook() {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function CreateBook() {
       router.replace(`/books/${res.data.createBook.id}`);
       toast.success("Successfully Created!");
     } catch (e) {
-      toast.error(error?.cause?.message ?? "Something went wrong");
+      parseApolloError(error);
     };
   };
 

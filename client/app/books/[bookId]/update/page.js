@@ -12,6 +12,7 @@ import {
   GET_BOOK_BY_ID_QUERY,
   UPDATE_BOOK_MUTATION,
 } from "../../../../graphql/bookGqlStrs";
+import { parseApolloError } from "../../../../utils/genericUtils";
 
 export default function UpdateBook({ params }) {
   const unwrappedParams = use(params);
@@ -21,6 +22,8 @@ export default function UpdateBook({ params }) {
   const getBookMetaData = useQuery(GET_BOOK_BY_ID_QUERY, {
     variables: { getBookById: parseInt(bookId), skip: !bookId },
   });
+
+
 
   const book = getBookMetaData?.data?.getBookById ?? {};
 
@@ -38,7 +41,7 @@ export default function UpdateBook({ params }) {
       toast.success("Successfully Updated!");
     } catch (e) {
       toast.error(
-        updateBookMetaData?.error?.cause?.message ?? "Something went wrong"
+        parseApolloError(updateBookMetaData.error)
       );
     }
   };
@@ -50,7 +53,7 @@ export default function UpdateBook({ params }) {
   if (getBookMetaData.error) {
     return (
       <GenericError
-        message={getBookMetaData.error.cause?.message ?? "Something went wrong"}
+        message={parseApolloError(getBookMetaData.error)}
       />
     );
   }

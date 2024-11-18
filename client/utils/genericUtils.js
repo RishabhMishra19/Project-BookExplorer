@@ -13,3 +13,16 @@ export const getInitialNavItem = (pathname) => {
 export const isAuthRoute = (pathname) => {
   return pathname.includes("login") || pathname.includes("signup");
 };
+
+export const parseApolloError = (apolloError) => {
+  if (!apolloError) {
+    return 'Unknown Error';
+  }
+  if (apolloError.message) {
+    return apolloError.message;
+  }
+  if (apolloError.cause?.message) {
+    return apolloError.cause.message;
+  }
+  return 'Something Went Wrong';
+}

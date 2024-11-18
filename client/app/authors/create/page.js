@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { CREATE_AUTHOR_MUTATION } from "../../../graphql/authorGqlStrs";
+import { parseApolloError } from "../../../utils/genericUtils";
 
 export default function CreateAuthor() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function CreateAuthor() {
       router.replace(`/authors/${res.data.createAuthor.id}`);
       toast.success("Successfully Created!");
     } catch (e) {
-      toast.error(error?.cause?.message ?? "Something went wrong");
+      toast.error(parseApolloError(error));
     }
   };
 

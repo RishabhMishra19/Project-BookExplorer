@@ -10,6 +10,7 @@ import { GenericError } from "../../components/GenericError";
 import { GenericLoader } from "../../components/GenericLoader";
 import { useEffect, useState } from "react";
 import { GET_AUTHORS_QUERY } from "../../graphql/authorGqlStrs";
+import { parseApolloError } from "../../utils/genericUtils";
 
 export default function AuthorsList() {
   const [filters, setFilters] = useState({});
@@ -46,7 +47,7 @@ export default function AuthorsList() {
       {loading ? (
         <GenericLoader height="50vh" />
       ) : error ? (
-        <GenericError message={error.cause.message} />
+        <GenericError message={parseApolloError(error)} />
       ) : (
         <>
           <div className="flex justify-between mx-[70px] border-b-[2px] pb-4 ml-[390px] mr-[60px] mb-4 items-center">

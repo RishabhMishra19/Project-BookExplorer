@@ -15,6 +15,7 @@ import {
 } from "../../../graphql/bookGqlStrs";
 import { ReviewDetails } from "../../../components/ReviewDetails";
 import dayjs from "dayjs";
+import { parseApolloError } from "../../../utils/genericUtils";
 
 export default function BookDetails({ params }) {
   const unwrappedParams = use(params);
@@ -47,8 +48,7 @@ export default function BookDetails({ params }) {
       })
       .catch((e) => {
         toast.error(
-          createBookReviewMetaData.error?.cause?.message ??
-            "Something went wrong"
+          parseApolloError(createBookReviewMetaData.error)
         );
       });
   };
@@ -58,7 +58,7 @@ export default function BookDetails({ params }) {
   }
 
   if (getBookMetaData?.error) {
-    return <GenericError message={error?.cause?.message} />;
+    return <GenericError message={parseApolloError(getBookMetaData.error)} />;
   }
 
   return (
