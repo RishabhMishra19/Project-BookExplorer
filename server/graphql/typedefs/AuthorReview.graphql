@@ -1,0 +1,8 @@
+type AuthorReview implements Node {
+  id: ID!
+  review: String
+  rating: Int!
+  reviewer_email: String!
+  created_at: String!
+  author: Author!
+}

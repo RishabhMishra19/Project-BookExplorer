@@ -1,0 +1,10 @@
+type Author implements Node {
+  id: ID!
+  name: String!
+  biography: String!
+  born_date: String!
+  books: [Book!]
+  reviews: [AuthorReview!]
+  avg_rating: Float!
+  total_reviews: Int!
+}

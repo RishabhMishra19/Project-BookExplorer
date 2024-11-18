@@ -1,0 +1,37 @@
+input Pagination {
+  skip: Int
+  limit: Int
+  sortBy: String
+}
+
+input BookFilter {
+  title: String
+  author: String
+  published_date: String
+}
+
+input AuthorFilter {
+  name: String
+  born_year: String
+}
+
+type GetAuthorsResponse {
+  authors: [Author!]
+  totalCount: Int!
+  totalPages: Int!
+  currentPage: Int!
+}
+
+type GetBooksResponse {
+  books: [Book!]
+  totalCount: Int!
+  totalPages: Int!
+  currentPage: Int!
+}
+
+type Query {
+  getBooks(filters: BookFilter, pagination: Pagination): GetBooksResponse
+  getBookById(id: ID!): Book!
+  getAuthors(filters: AuthorFilter, pagination: Pagination): GetAuthorsResponse
+  getAuthorById(id: ID!): Author!
+}

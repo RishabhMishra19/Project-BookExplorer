@@ -1,0 +1,10 @@
+type Book implements Node {
+  id: ID!
+  title: String!
+  description: String!
+  published_date: String!
+  author: Author!
+  reviews: [BookReview!]
+  avg_rating: Float!
+  total_reviews: Int!
+}
