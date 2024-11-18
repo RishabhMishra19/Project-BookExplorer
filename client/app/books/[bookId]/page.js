@@ -1,19 +1,19 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { StarRating } from "../../../components/StarRating";
-import { Modal } from "../../../components/Modal";
+import { StarRating } from "../../../components/Common/StarRating";
+import { Modal } from "../../../components/Common/Modal";
 import { use, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { GenericLoader } from "../../../components/GenericLoader";
-import { GenericError } from "../../../components/GenericError";
-import { ReviewForm } from "../../../components/ReviewForm";
+import { GenericLoader } from "../../../components/Common/GenericLoader";
+import { GenericError } from "../../../components/Common/GenericError";
+import { ReviewForm } from "../../../components/Review/ReviewForm";
 import toast, { Toaster } from "react-hot-toast";
 import {
   CREATE_BOOK_REVIEW_MUTATION,
   GET_BOOK_BY_ID_QUERY,
 } from "../../../graphql/bookGqlStrs";
-import { ReviewDetails } from "../../../components/ReviewDetails";
+import { ReviewDetails } from "../../../components/Review/ReviewDetails";
 import dayjs from "dayjs";
 import { parseApolloError } from "../../../utils/genericUtils";
 

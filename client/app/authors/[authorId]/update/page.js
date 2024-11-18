@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { AuthorForm } from "../../../../components/AuthorForm";
+import { AuthorForm } from "../../../../components/Author/AuthorForm";
 import { useMutation, useQuery } from "@apollo/client";
 import { use } from "react";
 import { useRouter } from "next/navigation";
-import { GenericLoader } from "../../../../components/GenericLoader";
-import { GenericError } from "../../../../components/GenericError";
+import { GenericLoader } from "../../../../components/Common/GenericLoader";
+import { GenericError } from "../../../../components/Common/GenericError";
 import toast, { Toaster } from "react-hot-toast";
 import dayjs from "dayjs";
 import {

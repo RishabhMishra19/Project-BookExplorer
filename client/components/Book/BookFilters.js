@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { GenericLoader } from "./GenericLoader";
-import { GenericError } from "./GenericError";
-import { GET_AUTHORS_QUERY } from "../graphql/authorGqlStrs";
+import { GenericLoader } from "../Common/GenericLoader";
+import { GenericError } from "../Common/GenericError";
+import { GET_AUTHORS_QUERY } from "../../graphql/authorGqlStrs";
 import { useQuery } from "@apollo/client";
 
 export const BookFilters = ({ filters, setFilters }) => {

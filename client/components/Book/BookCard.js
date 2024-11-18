@@ -1,5 +1,5 @@
 import React from "react";
-import { StarRating } from "./StarRating";
+import { StarRating } from "../Common/StarRating";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
 import Image from "next/image";

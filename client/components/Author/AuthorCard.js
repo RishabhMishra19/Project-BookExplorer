@@ -1,9 +1,9 @@
 import React from "react";
-import { StarRating } from "./StarRating";
 import Link from "next/link";
 import Image from "next/image";
 import { CiEdit } from "react-icons/ci";
 import dayjs from "dayjs";
+import { StarRating } from "../Common/StarRating";
 
 export const AuthorCard = ({ author }) => {
   return (

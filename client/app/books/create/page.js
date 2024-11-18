@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { BookForm } from "../../../components/BookForm";
+import { BookForm } from "../../../components/Book/BookForm";
 import { useMutation } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";

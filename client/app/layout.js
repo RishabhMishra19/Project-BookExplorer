@@ -2,8 +2,8 @@
 import "./globals.css";
 import { usePathname } from "next/navigation";
 
-import { NavBar } from "../components/NavBar";
-import { Footer } from "../components/Footer";
+import { NavBar } from "../components/Layout/NavBar";
+import { Footer } from "../components/Layout/Footer";
 import { getInitialNavItem } from "../utils/genericUtils";
 import { createApolloClient } from "../apollo-client";
 import { ApolloProvider } from "@apollo/client";

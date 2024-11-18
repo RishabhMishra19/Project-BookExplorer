@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { GenericLoader } from "./GenericLoader";
-import { GenericError } from "./GenericError";
+import { GenericLoader } from "../Common/GenericLoader";
+import { GenericError } from "../Common/GenericError";
 import { useQuery } from "@apollo/client";
-import { GET_AUTHORS_QUERY } from "../graphql/authorGqlStrs";
+import { GET_AUTHORS_QUERY } from "../../graphql/authorGqlStrs";
 
 export const BookForm = ({
   isUpdate,
