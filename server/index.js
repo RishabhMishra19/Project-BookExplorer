@@ -1,5 +1,5 @@
-const { typeDefs } = require("./graphql/typeDefs.js");
 const { resolvers } = require("./graphql/resolvers.js");
+const { typeDefs } = require('./graphql/typedefs');
 
 const { authorLoader, bookLoader } = require("./graphql/dataLoaders.js");
 const db = require("./models/index.js");

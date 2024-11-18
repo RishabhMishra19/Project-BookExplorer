@@ -1,0 +1,51 @@
+input CreateBookPayload {
+  title: String!
+  description: String!
+  published_date: String!
+  author_id: ID!
+}
+
+input UpdateBookPayload {
+  title: String
+  description: String
+  published_date: String
+  author_id: ID
+}
+
+input CreateBookReviewPayload {
+  review: String
+  rating: Int!
+  reviewer_email: String!
+}
+
+input CreateAuthorPayload {
+  name: String!
+  biography: String!
+  born_date: String!
+}
+
+input UpdateAuthorPayload {
+  name: String
+  biography: String
+  born_date: String
+}
+
+input CreateAuthorReviewPayload {
+  review: String
+  rating: Int!
+  reviewer_email: String!
+}
+
+type Mutation {
+  createBook(payload: CreateBookPayload): Book!
+  updateBook(id: ID!, payload: UpdateBookPayload): Book!
+  deleteBook(id: ID!): ID!
+  createBookReview(bookId: ID!, payload: CreateBookReviewPayload!): BookReview!
+  createAuthor(payload: CreateAuthorPayload): Author!
+  updateAuthor(id: ID!, payload: UpdateAuthorPayload): Author!
+  deleteAuthor(id: ID!): ID!
+  createAuthorReview(
+    authorId: ID!
+    payload: CreateAuthorReviewPayload!
+  ): AuthorReview!
+}
