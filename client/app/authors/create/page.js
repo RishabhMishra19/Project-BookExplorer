@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { AuthorForm } from "../../../components//AuthorAuthorForm";
+import { AuthorForm } from "../../../components/Author/AuthorForm";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
